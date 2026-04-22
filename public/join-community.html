@@ -12,6 +12,7 @@
       --bg: #ffeadd;
       --card: #fff9f5;
       --purple-dark: #831662;
+      --purple-light: #d19cb0;
       --orange-soft: #feb195;
       --accent-orange: #ff5010;
     }
@@ -42,6 +43,7 @@
       font-weight: 400;
       background: var(--bg);
       color: var(--purple-dark);
+      text-transform: uppercase;
     }
 
     main {
@@ -84,43 +86,36 @@
       color: var(--accent-orange);
     }
 
-    .search-input {
-      display: block;
-      width: 100%;
-      border: none;
-      border-radius: 0.7rem;
-      background: var(--card);
-      padding: 0.92rem 1rem;
-      font: inherit;
-      font-size: clamp(1.25rem, 5.2vw, 1.52rem);
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: var(--purple-dark);
-      outline: none;
+    .community-pick-list {
+      list-style: disc;
+      margin: 0 0 0.1rem;
+      padding-left: 1.35rem;
     }
 
-    select.search-input {
-      min-height: 4.2rem;
-      padding: 0.7rem 0.75rem 0.7rem 0.85rem;
+    .community-pick-list li {
+      margin-bottom: 0.55rem;
+      font-size: clamp(1.02rem, 4.1vw, 1.1rem);
+      letter-spacing: 0.04em;
       cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      color: var(--purple-light);
+      transition: color 0.15s ease;
     }
 
-    select.search-input[multiple] {
-      min-height: 5.2rem;
-      padding: 0.6rem 0.65rem 0.6rem 0.8rem;
-      line-height: 1.2;
+    .community-pick-list li::marker {
+      color: currentColor;
     }
 
-    select.search-input option {
-      padding: 0.2rem 0.15rem;
+    .community-pick-list li.selected {
+      color: var(--purple-dark);
     }
 
     .save-status {
       min-height: 1rem;
       margin-top: 0.5rem;
       text-align: center;
-      font-size: clamp(0.85rem, 3.2vw, 0.95rem);
+      font-size: clamp(0.8rem, 2.8vw, 0.9rem);
+      letter-spacing: 0.04em;
       color: var(--accent-orange);
     }
 
@@ -193,24 +188,24 @@
     <div class="rule" aria-hidden="true"></div>
 
     <div class="field">
-      <label class="field-label" for="join-allergies">Search by allergy:</label>
-      <select id="join-allergies" class="search-input" multiple size="4" title="Select one or more. Ctrl or ⌘ + click to add several."></select>
+      <p class="field-label" id="label-join-allergies">Search by allergy:</p>
+      <ul class="community-pick-list" id="join-allergies" aria-labelledby="label-join-allergies"></ul>
     </div>
 
     <div class="field">
-      <label class="field-label" for="join-neighborhoods">Search by neighborhood:</label>
-      <select id="join-neighborhoods" class="search-input" multiple size="4" title="Select one or more. Ctrl or ⌘ + click to add several."></select>
+      <p class="field-label" id="label-join-neighborhoods">Search by neighborhood:</p>
+      <ul class="community-pick-list" id="join-neighborhoods" aria-labelledby="label-join-neighborhoods"></ul>
     </div>
 
     <div class="field">
-      <label class="field-label" for="join-cuisines">Search by cuisine:</label>
-      <select id="join-cuisines" class="search-input" multiple size="4" title="Select one or more. Ctrl or ⌘ + click to add several."></select>
+      <p class="field-label" id="label-join-cuisines">Search by cuisine:</p>
+      <ul class="community-pick-list" id="join-cuisines" aria-labelledby="label-join-cuisines"></ul>
     </div>
 
     <p class="save-status" id="join-save-status" role="status" aria-live="polite"></p>
 
     <div class="submit-wrap">
-      <button type="button" class="btn-search" id="join-save-btn">Search</button>
+      <button type="button" class="btn-search" id="join-save-btn">Join</button>
     </div>
   </main>
 
@@ -239,47 +234,49 @@
       const statusEl = document.getElementById("join-save-status");
       const saveBtn = document.getElementById("join-save-btn");
 
-      function fillSelect(select, options) {
-        select.innerHTML = "";
+      function optionLabel(o) {
+        return o.label != null ? o.label : o.dataTitle;
+      }
+
+      function renderPickList(ul, options, selectedIds) {
+        const set = new Set(selectedIds);
+        ul.innerHTML = "";
         options.forEach((o) => {
-          const opt = document.createElement("option");
-          opt.value = o.id;
-          opt.textContent = o.label != null ? o.label : o.dataTitle;
-          select.appendChild(opt);
+          const li = document.createElement("li");
+          li.textContent = optionLabel(o);
+          li.dataset.id = o.id;
+          if (set.has(o.id)) li.classList.add("selected");
+          li.addEventListener("click", () => {
+            li.classList.toggle("selected");
+          });
+          ul.appendChild(li);
         });
       }
 
-      function applySelections(select, selectedIds) {
-        const set = new Set(selectedIds);
-        Array.from(select.options).forEach((opt) => {
-          opt.selected = set.has(opt.value);
-        });
+      function selectedFromList(ul) {
+        return Array.from(ul.querySelectorAll("li.selected"), (li) => li.dataset.id);
       }
 
       const picks = loadPicks();
-      fillSelect(elAllergies, ALLERGY);
-      fillSelect(elNeighborhoods, NEIGHBORHOOD);
-      fillSelect(elCuisines, CUISINE);
-
-      applySelections(elAllergies, picks.allergies);
-      applySelections(elNeighborhoods, picks.neighborhoods);
-      applySelections(elCuisines, picks.cuisines);
-
-      function selectedValues(select) {
-        return Array.from(select.selectedOptions).map((o) => o.value);
-      }
+      renderPickList(elAllergies, ALLERGY, picks.allergies);
+      renderPickList(elNeighborhoods, NEIGHBORHOOD, picks.neighborhoods);
+      renderPickList(elCuisines, CUISINE, picks.cuisines);
 
       saveBtn.addEventListener("click", () => {
         const next = {
-          allergies: selectedValues(elAllergies),
-          neighborhoods: selectedValues(elNeighborhoods),
-          cuisines: selectedValues(elCuisines),
+          allergies: selectedFromList(elAllergies),
+          neighborhoods: selectedFromList(elNeighborhoods),
+          cuisines: selectedFromList(elCuisines),
         };
         savePicks(next);
         const total = next.allergies.length + next.neighborhoods.length + next.cuisines.length;
         statusEl.textContent = total
-          ? "Saved! Your My communities pages will show " + total + " sticker" + (total === 1 ? "" : "s") + "."
-          : "Saved! Clear selections stay empty on My communities until you choose at least one.";
+          ? "SAVED! YOUR MY COMMUNITIES PAGES WILL SHOW " +
+            total +
+            " STICKER" +
+            (total === 1 ? "" : "S") +
+            "."
+          : "SAVED! CLEAR SELECTIONS STAY EMPTY ON MY COMMUNITIES UNTIL YOU CHOOSE AT LEAST ONE.";
         window.setTimeout(() => {
           statusEl.textContent = "";
         }, 4500);
