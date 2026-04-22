@@ -120,9 +120,16 @@ app.post("/api/neighborhood-qa/:slug/questions/:questionId/answers", (req, res) 
   return res.status(201).json({ answer });
 });
 
-app.use(express.static(__dirname));
+const PUBLIC_DIR = path.join(__dirname, "public");
+app.use(express.static(PUBLIC_DIR));
 
-app.listen(PORT, () => {
+if (require.main === module) {
+  app.listen(PORT, () => {
+    ensureStore();
+    console.log(`Bite Buddy running at http://localhost:${PORT}`);
+  });
+} else {
   ensureStore();
-  console.log(`Bite Buddy running at http://localhost:${PORT}`);
-});
+}
+
+module.exports = app;
