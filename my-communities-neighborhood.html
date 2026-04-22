@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>My Community — Neighborhood</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffeadd;
+      --panel: #f7f4f1;
+      --purple-dark: #831662;
+      --orange-soft: #feb195;
+      --accent-orange: #ff5010;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body,
+    a {
+      font-family: "Madimi One", system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--purple-dark);
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 28rem;
+      margin-inline: auto;
+      padding: max(1.2rem, env(safe-area-inset-top)) 1.2rem 1.5rem;
+    }
+
+    h1 {
+      margin: 0.85rem 0 0.9rem;
+      font-size: clamp(2.1rem, 10.5vw, 3.05rem);
+      line-height: 1.02;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--purple-dark);
+      text-align: center;
+    }
+
+    .rule {
+      height: 2px;
+      background: var(--orange-soft);
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .neighborhood-panel {
+      background: #ffffff;
+      border-radius: 1rem;
+      padding: 1rem 0.85rem 1.05rem;
+      box-shadow: 0 4px 18px rgba(131, 22, 98, 0.07);
+    }
+
+    .neighborhood-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.7rem 0.55rem;
+    }
+
+    .neighborhood-item {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.2rem;
+      border-radius: 0.55rem;
+      overflow: visible;
+    }
+
+    .neighborhood-link {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid var(--purple-dark);
+      background: #fffdfb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-transform: uppercase;
+      color: var(--accent-orange);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      font-size: clamp(0.86rem, 3vw, 1.03rem);
+      line-height: 1.05;
+      padding: 0.45rem;
+      transition: transform 0.12s ease, opacity 0.12s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .neighborhood-link:active {
+      transform: scale(0.97);
+      opacity: 0.94;
+    }
+
+    .communities-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85rem;
+      margin: 1.45rem auto 0;
+      color: var(--accent-orange);
+      text-decoration: none;
+      font-size: clamp(1.1rem, 4.9vw, 1.38rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      -webkit-tap-highlight-color: transparent;
+      width: fit-content;
+    }
+
+    .communities-nav .arrow {
+      font-size: 1.25em;
+      line-height: 1;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .communities-nav .arrow:active {
+      opacity: 0.92;
+    }
+
+    footer {
+      width: 100%;
+      margin-top: auto;
+      background: var(--purple-dark);
+      padding: 1.55rem 1.35rem max(1.65rem, env(safe-area-inset-bottom));
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .footer-brand {
+      margin: 0;
+      font-size: clamp(2rem, 10vw, 3rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-orange);
+    }
+  </style>
+  <script>
+    (() => {
+      const navEntry =
+        typeof performance !== "undefined" && performance.getEntriesByType
+          ? performance.getEntriesByType("navigation")[0]
+          : null;
+      const isReload = navEntry
+        ? navEntry.type === "reload"
+        : typeof performance !== "undefined" && performance.navigation
+          ? performance.navigation.type === 1
+          : false;
+
+      if (isReload) {
+        window.location.replace("index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <h1>My community!</h1>
+    <div class="rule" aria-hidden="true"></div>
+
+    <section class="neighborhood-panel" aria-label="Neighborhood communities">
+      <ul class="neighborhood-grid">
+        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=bearden">Bearden</a></li>
+        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=north-shore">North Shore</a></li>
+        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=north-knox">North Knox</a></li>
+        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=downtown">Downtown</a></li>
+        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=farragut">Farragut</a></li>
+        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=cedar-bluff">Cedar Bluff</a></li>
+        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=sequoyah-hills">Sequoyah Hills</a></li>
+        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=fort-sanders">Fort Sanders</a></li>
+        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=west-knox">West Knox</a></li>
+      </ul>
+    </section>
+
+    <div class="communities-nav" aria-label="Neighborhood page navigation">
+      <a class="arrow" href="my-communities.html" aria-label="Go to allergies my community page">&lt;</a>
+      <span>Neighborhood</span>
+      <a class="arrow" href="my-communities-cuisine.html" aria-label="Go to cuisine my community page">&gt;</a>
+    </div>
+  </main>
+
+  <footer id="page-footer" role="button" tabindex="0" aria-label="Go back or go to home page">
+    <p class="footer-brand">Bite Buddy</p>
+  </footer>
+  <script>
+    const pageFooter = document.getElementById("page-footer");
+    function goBackOrHome() {
+      window.location.href = "home.html";
+    }
+    pageFooter?.addEventListener("click", goBackOrHome);
+    pageFooter?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        goBackOrHome();
+      }
+    });
+  </script>
+</body>
+</html>

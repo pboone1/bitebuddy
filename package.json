@@ -1,0 +1,13 @@
+{
+  "name": "allergy-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bite Buddy static app + lightweight Q&A backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

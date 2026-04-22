@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Favorites</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffeadd;
+      --card: #feb195;
+      --purple-dark: #831662;
+      --orange-soft: #feb195;
+      --accent-orange: #ff5010;
+      --offwhite: #fff9f5;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html { -webkit-tap-highlight-color: transparent; }
+
+    body,
+    button,
+    textarea,
+    input {
+      font-family: "Madimi One", system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      color: var(--purple-dark);
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 28rem;
+      margin-inline: auto;
+      padding: max(1.2rem, env(safe-area-inset-top)) 1.2rem 1.3rem;
+    }
+
+    h1 {
+      margin: 0.85rem 0 0.9rem;
+      font-size: clamp(2.2rem, 10.8vw, 3.15rem);
+      line-height: 1.03;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--purple-dark);
+      text-align: center;
+    }
+
+    .rule {
+      height: 2px;
+      background: var(--orange-soft);
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .favorites-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .favorite-card {
+      position: relative;
+      background: var(--card);
+      border-radius: 0.75rem;
+      padding: 0.95rem 3rem 0.95rem 0.9rem;
+      min-height: 8rem;
+    }
+
+    .favorite-name {
+      margin: 0;
+      color: var(--purple-dark);
+      font-size: clamp(1.15rem, 6.2vw, 1.8rem);
+      line-height: 1.02;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .favorite-cuisine,
+    .favorite-address {
+      margin: 0.22rem 0 0;
+      color: var(--offwhite);
+      font-size: clamp(0.84rem, 3.7vw, 1.03rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .favorite-note {
+      margin-top: 0.48rem;
+      width: 100%;
+      border: 1px solid rgba(131, 22, 98, 0.22);
+      border-radius: 0.5rem;
+      padding: 0.38rem 0.45rem;
+      background: rgba(255, 249, 245, 0.7);
+      color: var(--purple-dark);
+      font: inherit;
+      font-size: 0.78rem;
+      line-height: 1.2;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      resize: vertical;
+      min-height: 2.35rem;
+      outline: none;
+    }
+
+    .favorite-heart {
+      position: absolute;
+      right: 0.78rem;
+      top: 0.78rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      width: 2.42rem;
+      height: 2.42rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .favorite-heart:active { opacity: 0.85; }
+
+    .favorite-heart img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .empty-state {
+      margin: 0.9rem 0 0;
+      text-align: center;
+      color: var(--purple-dark);
+      font-size: 0.95rem;
+      line-height: 1.4;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .empty-state a {
+      color: var(--purple-dark);
+    }
+
+    footer {
+      width: 100%;
+      margin-top: auto;
+      background: var(--purple-dark);
+      padding: 1.55rem 1.35rem max(1.65rem, env(safe-area-inset-bottom));
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .footer-brand {
+      margin: 0;
+      font-size: clamp(2rem, 10vw, 3rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-orange);
+    }
+  </style>
+  <script>
+    (() => {
+      const navEntry = typeof performance !== "undefined" && performance.getEntriesByType
+        ? performance.getEntriesByType("navigation")[0]
+        : null;
+      const isReload = navEntry
+        ? navEntry.type === "reload"
+        : typeof performance !== "undefined" && performance.navigation
+          ? performance.navigation.type === 1
+          : false;
+      if (isReload) {
+        window.location.replace("index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Favorites</h1>
+    <div class="rule" aria-hidden="true"></div>
+
+    <ul class="favorites-list" id="favorites-list"></ul>
+    <p class="empty-state" id="empty-state" hidden>No favorites yet. Add favorites from the <a href="results.html">map page</a>.</p>
+  </main>
+
+  <footer id="page-footer" role="button" tabindex="0" aria-label="Go to home page">
+    <p class="footer-brand">Bite Buddy</p>
+  </footer>
+
+  <script>
+    const FAVORITES_KEY = "favoriteRestaurantsV1";
+    const listEl = document.getElementById("favorites-list");
+    const emptyEl = document.getElementById("empty-state");
+
+    function loadFavorites() {
+      try {
+        const raw = localStorage.getItem(FAVORITES_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return parsed && typeof parsed === "object" ? parsed : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveFavorites(store) {
+      try {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(store));
+      } catch {
+        /* ignore */
+      }
+    }
+
+    function normalizeNameKey(name) {
+      return String(name || "")
+        .trim()
+        .toLowerCase()
+        .replace(/’/g, "'")
+        .replace(/\s+/g, " ");
+    }
+
+    function orderedFavorites(store) {
+      return Object.values(store)
+        .filter((item) => item && typeof item === "object")
+        .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")));
+    }
+
+    function renderFavorites() {
+      const store = loadFavorites();
+      const rows = orderedFavorites(store);
+      if (!rows.length) {
+        listEl.innerHTML = "";
+        emptyEl.hidden = false;
+        return;
+      }
+
+      emptyEl.hidden = true;
+      listEl.innerHTML = rows.map((item) => {
+        const rawName = String(item.name || "");
+        const encodedName = encodeURIComponent(rawName);
+        const name = String(item.name || "Restaurant").toUpperCase();
+        const cuisine = String(item.cuisine || "Cuisine").toUpperCase();
+        const location = String(item.location || "Knoxville, TN").toUpperCase();
+        const note = String(item.note || "");
+        return `<li class="favorite-card" data-name="${encodedName}">
+          <h2 class="favorite-name">${name}</h2>
+          <p class="favorite-cuisine">${cuisine}</p>
+          <p class="favorite-address">${location}</p>
+          <textarea class="favorite-note" maxlength="280" placeholder="Type notes...">${note}</textarea>
+          <button class="favorite-heart" type="button" aria-label="Remove from favorites">
+            <img src="images/favorite-cookie.png" alt="" />
+          </button>
+        </li>`;
+      }).join("");
+    }
+
+    listEl.addEventListener("input", (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLTextAreaElement) || !target.matches(".favorite-note")) return;
+      const card = target.closest(".favorite-card");
+      if (!card) return;
+      const name = decodeURIComponent(card.getAttribute("data-name") || "");
+      const key = normalizeNameKey(name);
+      const store = loadFavorites();
+      if (!store[key]) return;
+      store[key].note = target.value;
+      store[key].updatedAt = new Date().toISOString();
+      saveFavorites(store);
+    });
+
+    listEl.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement) || !target.matches(".favorite-heart")) return;
+      const card = target.closest(".favorite-card");
+      if (!card) return;
+      const name = decodeURIComponent(card.getAttribute("data-name") || "");
+      const key = normalizeNameKey(name);
+      const store = loadFavorites();
+      if (store[key]) {
+        delete store[key];
+        saveFavorites(store);
+      }
+      renderFavorites();
+    });
+
+    const pageFooter = document.getElementById("page-footer");
+    function goHome() {
+      window.location.href = "home.html";
+    }
+    pageFooter?.addEventListener("click", goHome);
+    pageFooter?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        goHome();
+      }
+    });
+
+    renderFavorites();
+  </script>
+</body>
+</html>

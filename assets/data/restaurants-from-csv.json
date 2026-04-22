@@ -1,0 +1,1243 @@
+{
+  "source": "csv for restaurants.csv",
+  "restaurants": [
+    {
+      "name": "Farmacy",
+      "cuisines": [
+        "American",
+        "Brunch"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Cazzy's Corner Grill",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Harvest",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Nama Sushi Bar",
+      "cuisines": [
+        "Japanese"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "Northshore Brasserie",
+      "cuisines": [
+        "French"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "Lakeside Tavern",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Possible",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "Casa Don Gallo",
+      "cuisines": [
+        "Mexican"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Pero's on the Hill",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Sullivan's Fine Food",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "Chivo Taqueria",
+      "cuisines": [
+        "Mexican"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "The Admiral",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Possible",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "Wild Love Bakehouse",
+      "cuisines": [
+        "Bakery"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Honeybee Coffee Co",
+      "cuisines": [
+        "Coffee"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "K Brew",
+      "cuisines": [
+        "Coffee"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Remedy Coffee",
+      "cuisines": [
+        "Coffee"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Awaken Coffee",
+      "cuisines": [
+        "Coffee"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "OliBea",
+      "cuisines": [
+        "Breakfast"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Scrambled Jake's",
+      "cuisines": [
+        "Breakfast"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "No",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Aretha Frankenstein's",
+      "cuisines": [
+        "Breakfast"
+      ],
+      "accommodations": {
+        "Gluten-Free": "No",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "No",
+        "Vegetarian": "Possible",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "French Market Creperie",
+      "cuisines": [
+        "French",
+        "Breakfast"
+      ],
+      "accommodations": {
+        "Gluten-Free": "No",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "No",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "Good Golly Tamale",
+      "cuisines": [
+        "Mexican",
+        "Breakfast"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Yes",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Emilia",
+      "cuisines": [
+        "Italian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "Osteria Stella",
+      "cuisines": [
+        "Italian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "Savelli's",
+      "cuisines": [
+        "Italian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "Amalfi",
+      "cuisines": [
+        "Italian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "A Dopo Pizza",
+      "cuisines": [
+        "Italian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Sitar",
+      "cuisines": [
+        "Indian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Aroma Indian Kitchen",
+      "cuisines": [
+        "Indian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Woodland",
+      "cuisines": [
+        "Indian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Taj Indian Bistro",
+      "cuisines": [
+        "Indian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Bombay Palace",
+      "cuisines": [
+        "Indian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "GJ-2",
+      "cuisines": [
+        "Indian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Yes",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Acapulco",
+      "cuisines": [
+        "Mexican"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "El Charro",
+      "cuisines": [
+        "Mexican"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "La Esperanza",
+      "cuisines": [
+        "Mexican"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Las Fuentes",
+      "cuisines": [
+        "Mexican"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "SoKno Taco Cantina",
+      "cuisines": [
+        "Mexican"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "DosBros",
+      "cuisines": [
+        "Mexican"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Taqueria La Herradura",
+      "cuisines": [
+        "Mexican"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "The Plaid Apron",
+      "cuisines": [
+        "French",
+        "Breakfast"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "Chez Guevara",
+      "cuisines": [
+        "French"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "KoPita",
+      "cuisines": [
+        "Mediterranean"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "King Gyros",
+      "cuisines": [
+        "Mediterranean"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Kefi",
+      "cuisines": [
+        "Mediterranean"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Holy Land Market",
+      "cuisines": [
+        "Mediterranean"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Yes",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Alibaba Market & Grille",
+      "cuisines": [
+        "Mediterranean"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Asia Kitchen",
+      "cuisines": [
+        "Chinese"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Szechuan Garden",
+      "cuisines": [
+        "Chinese"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Plum Tree",
+      "cuisines": [
+        "Chinese"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "China Lee",
+      "cuisines": [
+        "Chinese"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "China Jiang",
+      "cuisines": [
+        "Chinese"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Golden Garden",
+      "cuisines": [
+        "Chinese"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Clancy's Tavern",
+      "cuisines": [
+        "Irish"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Finn's Tavern",
+      "cuisines": [
+        "Irish"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Union Jack's",
+      "cuisines": [
+        "Irish"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Marble City Pub",
+      "cuisines": [
+        "Irish"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Saloon 16",
+      "cuisines": [
+        "Irish"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Savelli's Italian Restaurant",
+      "cuisines": [
+        "Italian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "A Dopo Sourdough Pizza",
+      "cuisines": [
+        "Italian"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Lonesome Dove Western Bistro",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "Stock & Barrel",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Possible",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "The Tomato Head",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Tupelo Honey",
+      "cuisines": [
+        "American",
+        "Brunch"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Not Watson's Kitchen + Bar",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Crabtree Farmacy",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Cafe 4",
+      "cuisines": [
+        "American",
+        "Brunch"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Yassin's Falafel House",
+      "cuisines": [
+        "Mediterranean"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Treetop Coffee Shop",
+      "cuisines": [
+        "Coffee"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Old City Java",
+      "cuisines": [
+        "Coffee"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Capybara Coffee",
+      "cuisines": [
+        "Coffee"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Kefi (Downtown/adjacent)",
+      "cuisines": [
+        "Mediterranean"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Possible"
+      }
+    },
+    {
+      "name": "The French Market Creperie",
+      "cuisines": [
+        "French"
+      ],
+      "accommodations": {
+        "Gluten-Free": "No",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "No",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "No"
+      }
+    },
+    {
+      "name": "Sweet P's Downtown BBQ",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Yes",
+        "Dairy-Free": "Yes",
+        "Egg-Free": "Yes",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Balter Beerworks",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Oliver Royale",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "J.C. Holdway",
+      "cuisines": [
+        "Southern"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    },
+    {
+      "name": "Downtown Grill & Brewery",
+      "cuisines": [
+        "American"
+      ],
+      "accommodations": {
+        "Gluten-Free": "Possible",
+        "Dairy-Free": "Possible",
+        "Egg-Free": "Possible",
+        "Vegetarian": "Yes",
+        "Peanut-Free": "Possible",
+        "Tree Nut-Free": "Possible",
+        "Soy-Free": "Possible",
+        "Shellfish-Free": "Yes"
+      }
+    }
+  ]
+}

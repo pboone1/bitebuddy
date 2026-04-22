@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Map list</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    :root {
+      --bg: #ffeadd;
+      --card: #fff9f5;
+      --purple-dark: #831662;
+      --purple-light: #d19cb0;
+      --orange-soft: #feb195;
+      --map-border: var(--purple-dark);
+      --search-orange: #ff5010;
+      --map-pin: var(--search-orange);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body,
+    button,
+    input,
+    textarea,
+    select {
+      font-family: "Madimi One", system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--purple-dark);
+    }
+
+    .main-column {
+      flex: 1;
+      width: 100%;
+      max-width: 28rem;
+      margin-inline: auto;
+      padding: max(1rem, env(safe-area-inset-top)) 1.1rem 1.25rem;
+    }
+
+    .screen-title {
+      margin: 0 0 0.85rem;
+      font-size: clamp(1.35rem, 5.5vw, 1.7rem);
+      line-height: 1.05;
+      text-align: left;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .view-toggle {
+      border: none;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      font-size: inherit;
+      text-transform: inherit;
+      letter-spacing: inherit;
+      cursor: pointer;
+      transition: opacity 0.15s ease, color 0.15s ease;
+    }
+
+    .view-toggle:hover,
+    .view-toggle:focus-visible {
+      opacity: 0.88;
+    }
+
+    .view-toggle.is-active {
+      color: var(--purple-dark);
+    }
+
+    .view-toggle:not(.is-active) {
+      color: var(--purple-light);
+    }
+
+    .screen-title .sep {
+      color: var(--purple-light);
+      user-select: none;
+      margin-inline: 0.12rem;
+    }
+
+    .card {
+      position: relative;
+      background: var(--card);
+      border-radius: 1.25rem;
+      padding: 3.1rem 1rem 1.1rem;
+      box-shadow: 0 6px 28px rgba(131, 22, 98, 0.07);
+    }
+
+    .menu-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 2.35rem;
+      height: 1.85rem;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.42rem;
+      align-items: stretch;
+    }
+
+    .menu-btn span {
+      display: block;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--orange-soft);
+    }
+
+    .info-box-outer {
+      overflow: hidden;
+      max-height: 15rem;
+      margin-bottom: 1rem;
+      transition:
+        max-height 0.38s ease,
+        margin-bottom 0.38s ease,
+        opacity 0.28s ease;
+    }
+
+    .info-box-outer.is-collapsed {
+      max-height: 0;
+      margin-bottom: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .info-box {
+      background: var(--orange-soft);
+      border-radius: 1rem;
+      padding: 0.95rem 1rem 1rem;
+    }
+
+    .card-nav {
+      margin: 0.85rem 0 0;
+      font-size: 0.72rem;
+      line-height: 1.4;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .card-nav a {
+      color: var(--purple-dark);
+      text-decoration: none;
+    }
+
+    .card-nav .sep {
+      margin: 0 0.35rem;
+      color: var(--purple-light);
+    }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem 0.75rem;
+      align-items: baseline;
+      font-size: clamp(0.82rem, 3.4vw, 0.95rem);
+      line-height: 1.35;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--purple-dark);
+    }
+
+    .info-row + .info-row {
+      margin-top: 0.45rem;
+    }
+
+    .info-row span:first-child {
+      text-align: left;
+    }
+
+    .info-row span:last-child {
+      text-align: right;
+    }
+
+    .distance-field {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.35rem;
+      width: 100%;
+      max-width: 9.25rem;
+    }
+
+    .filter-select--miles {
+      max-width: 4.05rem;
+      flex: 0 0 auto;
+      padding-left: 0.28rem;
+      padding-right: 1.35rem;
+      background-position: right 0.32rem center;
+      background-size: 0.6rem auto;
+    }
+
+    .distance-suffix {
+      flex-shrink: 0;
+      font-size: inherit;
+      letter-spacing: inherit;
+      text-transform: uppercase;
+    }
+
+    .filter-field {
+      display: flex;
+      justify-content: flex-end;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .filter-input,
+    .filter-select {
+      width: 100%;
+      max-width: 12.5rem;
+      border: none;
+      border-radius: 0.45rem;
+      padding: 0.2rem 0.4rem;
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--purple-dark);
+      font: inherit;
+      font-size: inherit;
+      letter-spacing: inherit;
+      text-align: right;
+      text-transform: uppercase;
+      outline: none;
+    }
+
+    .filter-input::placeholder {
+      color: var(--purple-dark);
+      opacity: 0.55;
+      text-transform: uppercase;
+    }
+
+    .filter-select {
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      padding-right: 1.55rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23831662' d='M6 8.2 1.2 3.2h9.6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.42rem center;
+      background-size: 0.68rem auto;
+    }
+
+    .filter-select::-ms-expand {
+      display: none;
+    }
+
+    #map-wrap {
+      display: grid;
+      grid-template: 1fr / 1fr;
+      border: 3px solid var(--map-border);
+      border-radius: 0.65rem;
+      overflow: hidden;
+      min-height: min(52vh, 26rem);
+      height: 52vh;
+      max-height: 28rem;
+      background: #ffffff;
+    }
+
+    #map-wrap > * {
+      grid-area: 1 / 1;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #map-wrap[hidden] {
+      display: none !important;
+    }
+
+    #list-wrap {
+      border: 3px solid rgba(131, 22, 98, 0.08);
+      border-radius: 0.65rem;
+      overflow: hidden;
+      min-height: min(52vh, 26rem);
+      height: 52vh;
+      max-height: 28rem;
+      background: #f7f3ef;
+      padding: 0.65rem;
+    }
+
+    #list-wrap[hidden] {
+      display: none !important;
+    }
+
+    .restaurant-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      padding-right: 0.1rem;
+    }
+
+    .restaurant-list-card {
+      background: #f2a890;
+      border-radius: 0.7rem;
+      padding: 0.9rem 0.82rem 0.85rem;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    }
+
+    .restaurant-list-name {
+      margin: 0;
+      font-size: clamp(1.05rem, 4.8vw, 1.7rem);
+      line-height: 1.02;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--purple-dark);
+    }
+
+    .restaurant-list-safety {
+      margin: 0.24rem 0 0;
+      font-size: clamp(0.82rem, 3.4vw, 1.1rem);
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--purple-dark);
+    }
+
+    .restaurant-list-cuisine {
+      margin: 0.24rem 0 0;
+      font-size: clamp(0.76rem, 3vw, 1rem);
+      line-height: 1.1;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #f6ede7;
+    }
+
+    .restaurant-list-address {
+      margin: 0.2rem 0 0;
+      font-size: clamp(0.72rem, 2.9vw, 0.95rem);
+      line-height: 1.18;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #f6ede7;
+    }
+
+    .restaurant-list-empty {
+      margin: 0;
+      border-radius: 0.65rem;
+      background: #f2a890;
+      color: var(--purple-dark);
+      padding: 1rem 0.8rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.86rem;
+      line-height: 1.35;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    #map[hidden] {
+      display: none !important;
+    }
+
+    .map-status {
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--purple-dark);
+      background: #ffffff;
+    }
+
+    .map-status[hidden] {
+      display: none !important;
+    }
+
+    .map-status a {
+      color: var(--purple-dark);
+    }
+
+    footer {
+      width: 100%;
+      margin-top: auto;
+      background: var(--purple-dark);
+      padding: 1.45rem 1.35rem max(1.55rem, env(safe-area-inset-bottom));
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .footer-heading {
+      margin: 0 0 0.8rem;
+      font-size: clamp(0.88rem, 3.2vw, 1rem);
+      line-height: 1.35;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--search-orange);
+    }
+
+    .footer-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .footer-list li {
+      margin: 0;
+      font-size: clamp(1.12rem, 4.8vw, 1.38rem);
+      line-height: 1.3;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--search-orange);
+    }
+
+    .footer-list.is-empty li {
+      font-size: clamp(0.95rem, 3.6vw, 1.08rem);
+      letter-spacing: 0.07em;
+      color: var(--search-orange);
+    }
+
+    .leaflet-control-attribution {
+      font-family: "Madimi One", system-ui, sans-serif;
+      font-size: 10px !important;
+      color: var(--purple-dark) !important;
+      background: rgba(255, 255, 255, 0.92) !important;
+    }
+
+    .leaflet-control-attribution a {
+      color: var(--purple-dark) !important;
+    }
+
+    .leaflet-container {
+      background: #ffffff !important;
+      font-family: "Madimi One", system-ui, sans-serif;
+    }
+
+    .leaflet-bar,
+    .leaflet-bar a {
+      border-color: rgba(131, 22, 98, 0.35) !important;
+      color: var(--purple-dark) !important;
+    }
+
+    .leaflet-bar a:hover {
+      background: #fff5f0 !important;
+      border-color: var(--search-orange) !important;
+      color: var(--search-orange) !important;
+    }
+
+    .leaflet-popup-content-wrapper {
+      border-radius: 0.55rem !important;
+      border: 2px solid var(--search-orange) !important;
+      box-shadow: 0 4px 16px rgba(131, 22, 98, 0.12) !important;
+    }
+
+    .leaflet-popup-tip {
+      box-shadow: none !important;
+      border: 1px solid var(--search-orange) !important;
+      background: #ffffff !important;
+    }
+
+    .leaflet-popup-content {
+      margin: 0.65rem 0.85rem !important;
+      color: var(--purple-dark) !important;
+      font-size: 0.82rem !important;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .leaflet-interactive:focus {
+      outline: 2px solid var(--search-orange) !important;
+      outline-offset: 1px;
+    }
+
+  </style>
+  <script>
+    (() => {
+      const navEntry =
+        typeof performance !== "undefined" && performance.getEntriesByType
+          ? performance.getEntriesByType("navigation")[0]
+          : null;
+      const isReload = navEntry
+        ? navEntry.type === "reload"
+        : typeof performance !== "undefined" && performance.navigation
+          ? performance.navigation.type === 1
+          : false;
+
+      if (isReload) {
+        window.location.replace("index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+  <main class="main-column">
+    <h1 class="screen-title">
+      <button type="button" id="toggle-map" class="view-toggle title-map is-active" aria-pressed="true">Map</button>
+      <span class="sep" aria-hidden="true">/</span>
+      <button type="button" id="toggle-list" class="view-toggle title-list" aria-pressed="false">List</button>
+    </h1>
+
+    <div class="card">
+      <button
+        type="button"
+        class="menu-btn"
+        id="menu-btn"
+        aria-expanded="true"
+        aria-controls="info-box-outer"
+        aria-label="Collapse or expand filters"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="info-box-outer" id="info-box-outer">
+        <div class="info-box" id="info-box">
+          <div class="info-row">
+            <span>Distance:</span>
+            <label class="filter-field" for="distance-select">
+              <span class="distance-field">
+                <select
+                  id="distance-select"
+                  class="filter-select filter-select--miles"
+                  aria-label="Distance in miles"
+                >
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25" selected>25</option>
+                  <option value="30">30</option>
+                  <option value="35">35</option>
+                  <option value="40">40</option>
+                  <option value="45">45</option>
+                  <option value="50">50</option>
+                  <option value="55">55</option>
+                  <option value="60">60</option>
+                  <option value="65">65</option>
+                  <option value="70">70</option>
+                  <option value="75">75</option>
+                  <option value="80">80</option>
+                  <option value="85">85</option>
+                  <option value="90">90</option>
+                  <option value="95">95</option>
+                  <option value="100">100</option>
+                </select>
+                <span class="distance-suffix">miles</span>
+              </span>
+            </label>
+          </div>
+          <div class="info-row">
+            <span>Cuisine:</span>
+            <label class="filter-field" for="cuisine-select">
+              <select id="cuisine-select" class="filter-select" aria-label="Cuisine type">
+                <option value="">All types</option>
+                <option value="American">American</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Coffee">Coffee</option>
+                <option value="French">French</option>
+                <option value="Greek">Greek</option>
+                <option value="Indian">Indian</option>
+                <option value="Irish">Irish</option>
+                <option value="Italian">Italian</option>
+                <option value="Japanese">Japanese</option>
+                <option value="Mediterranean">Mediterranean</option>
+                <option value="Mexican">Mexican</option>
+                <option value="Southern">Southern</option>
+              </select>
+            </label>
+          </div>
+          <div class="info-row">
+            <span>Price:</span>
+            <label class="filter-field" for="price-select">
+              <select id="price-select" class="filter-select" aria-label="Price range">
+                <option value="Under $15">Under $15</option>
+                <option value="$15–$25">$15–$25</option>
+                <option value="$25–$50">$25–$50</option>
+                <option value="$50–$100">$50–$100</option>
+                <option value="$100+">$100+</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div id="map-wrap">
+        <div id="map-status" class="map-status">Loading map…</div>
+        <div id="map" hidden></div>
+      </div>
+      <div id="list-wrap" hidden>
+        <ul id="restaurant-list" class="restaurant-list" aria-label="Restaurant results list"></ul>
+      </div>
+
+      <p class="card-nav">
+        <a href="next.html">Back to search</a>
+      </p>
+    </div>
+  </main>
+
+  <footer id="page-footer" role="button" tabindex="0" aria-label="Go to welcome page">
+    <p class="footer-heading">Search for:</p>
+    <ul class="footer-list" id="footer-allergies"></ul>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    function formatAllergyLine(label) {
+      const t = String(label).trim();
+      if (!t) return "";
+      const u = t.toUpperCase();
+      return u.endsWith(" FREE") ? u : `${u} FREE`;
+    }
+
+    function loadSelectedAllergies() {
+      try {
+        const raw = sessionStorage.getItem("selectedAllergies");
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed.filter((s) => typeof s === "string") : [];
+      } catch {
+        return [];
+      }
+    }
+
+    const footerList = document.getElementById("footer-allergies");
+    const selected = loadSelectedAllergies();
+    if (selected.length === 0) {
+      footerList.classList.add("is-empty");
+      const li = document.createElement("li");
+      li.textContent = "No allergies selected yet";
+      footerList.appendChild(li);
+    } else {
+      for (const label of selected) {
+        const li = document.createElement("li");
+        li.textContent = formatAllergyLine(label);
+        footerList.appendChild(li);
+      }
+    }
+
+    const pageFooter = document.getElementById("page-footer");
+    function goHome() {
+      window.location.href = "home.html";
+    }
+    pageFooter?.addEventListener("click", goHome);
+    pageFooter?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        goHome();
+      }
+    });
+
+    let leafletMap = null;
+    let radiusCircle = null;
+    /** @type {{ lat: number; lon: number } | null} */
+    let searchCenter = null;
+    /** @type {any} */
+    let restaurantMarkersLayer = null;
+    let knoxvilleRestaurants = null;
+
+    const MARKER_PURPLE = "#831662";
+    const MARKER_LIGHT_ORANGE = "#feb195";
+    const MARKER_ORANGE_STROKE = "#f5a070";
+    const GEO_CACHE_KEY = "restaurantGeocodeCacheV1";
+    const FAVORITES_KEY = "favoriteRestaurantsV1";
+    const NEIGHBORHOOD_COORDS_KEY = "neighborhoodCoordsCacheV1";
+    const GEOCODE_DELAY_MS = 1100;
+    let geocodeQueue = Promise.resolve();
+    const geocodeInFlight = new Set();
+    let geocodeCache = {};
+
+    function haversineMeters(lat1, lon1, lat2, lon2) {
+      const R = 6371000;
+      const toRad = (d) => (d * Math.PI) / 180;
+      const dLat = toRad(lat2 - lat1);
+      const dLon = toRad(lon2 - lon1);
+      const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+      return 2 * R * Math.asin(Math.sqrt(Math.min(1, a)));
+    }
+
+    function normalizeNameKey(name) {
+      return String(name || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\u2019/g, "'")
+        .replace(/\s+/g, " ");
+    }
+
+    function loadGeocodeCache() {
+      try {
+        const raw = localStorage.getItem(GEO_CACHE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        geocodeCache = parsed && typeof parsed === "object" ? parsed : {};
+      } catch {
+        geocodeCache = {};
+      }
+    }
+
+    function saveGeocodeCache() {
+      try {
+        localStorage.setItem(GEO_CACHE_KEY, JSON.stringify(geocodeCache));
+      } catch {
+        /* ignore */
+      }
+    }
+
+    function getCachedCoords(name) {
+      const key = normalizeNameKey(name);
+      const v = geocodeCache[key];
+      if (!v || typeof v !== "object") return null;
+      const lat = Number(v.lat);
+      const lon = Number(v.lon);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+      return { lat, lon };
+    }
+
+    function setCachedCoords(name, lat, lon) {
+      const key = normalizeNameKey(name);
+      geocodeCache[key] = { lat, lon };
+      saveGeocodeCache();
+    }
+
+    function normalizeNeighborhoodKey(value) {
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\u2019/g, "'")
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, " ");
+    }
+
+    function loadNeighborhoodCoordsCache() {
+      try {
+        const raw = localStorage.getItem(NEIGHBORHOOD_COORDS_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return parsed && typeof parsed === "object" ? parsed : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveNeighborhoodCoordsCache(store) {
+      try {
+        localStorage.setItem(NEIGHBORHOOD_COORDS_KEY, JSON.stringify(store));
+      } catch {
+        /* ignore */
+      }
+    }
+
+    function getCachedNeighborhoodCoords(name) {
+      const key = normalizeNeighborhoodKey(name);
+      if (!key) return null;
+      const store = loadNeighborhoodCoordsCache();
+      const v = store[key];
+      if (!v || typeof v !== "object") return null;
+      const lat = Number(v.lat);
+      const lon = Number(v.lon);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+      return { lat, lon };
+    }
+
+    function setCachedNeighborhoodCoords(name, coords) {
+      const key = normalizeNeighborhoodKey(name);
+      if (!key || !coords) return;
+      const store = loadNeighborhoodCoordsCache();
+      store[key] = { lat: Number(coords.lat), lon: Number(coords.lon) };
+      saveNeighborhoodCoordsCache(store);
+    }
+
+    function loadFavoritesStore() {
+      try {
+        const raw = localStorage.getItem(FAVORITES_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return parsed && typeof parsed === "object" ? parsed : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveFavoritesStore(store) {
+      try {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(store));
+      } catch {
+        /* ignore */
+      }
+    }
+
+    function favoritePayloadForRestaurant(rest) {
+      return {
+        name: String(rest.name || ""),
+        cuisine: Array.isArray(rest.cuisines) && rest.cuisines.length ? String(rest.cuisines[0]) : "",
+        location: "Knoxville, TN",
+        note: "",
+        updatedAt: new Date().toISOString(),
+      };
+    }
+
+    function isFavoriteRestaurant(name) {
+      const store = loadFavoritesStore();
+      return Boolean(store[normalizeNameKey(name)]);
+    }
+
+    function toggleFavoriteRestaurant(rest) {
+      const key = normalizeNameKey(rest.name);
+      if (!key) return false;
+      const store = loadFavoritesStore();
+      if (store[key]) {
+        delete store[key];
+        saveFavoritesStore(store);
+        return false;
+      }
+      const existing = store[key] && typeof store[key] === "object" ? store[key] : {};
+      store[key] = { ...favoritePayloadForRestaurant(rest), note: existing.note || "" };
+      saveFavoritesStore(store);
+      return true;
+    }
+
+    async function geocodeRestaurantByName(name) {
+      const headers = { Accept: "application/json", "Accept-Language": "en" };
+      const tryUrls = [
+        "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=" +
+          encodeURIComponent(name + ", Knoxville, TN"),
+        "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=" +
+          encodeURIComponent(name + ", Knox County, TN"),
+      ];
+      for (const url of tryUrls) {
+        try {
+          const res = await fetch(url, { headers });
+          if (!res.ok) continue;
+          const data = await res.json();
+          if (Array.isArray(data) && data.length) {
+            const lat = Number.parseFloat(data[0].lat);
+            const lon = Number.parseFloat(data[0].lon);
+            if (Number.isFinite(lat) && Number.isFinite(lon)) {
+              return { lat, lon };
+            }
+          }
+        } catch {
+          /* try next */
+        }
+      }
+      return null;
+    }
+
+    function queueRestaurantGeocode(rest) {
+      const key = normalizeNameKey(rest.name);
+      if (!key || geocodeInFlight.has(key)) return;
+      geocodeInFlight.add(key);
+      geocodeQueue = geocodeQueue
+        .then(async () => {
+          await new Promise((r) => setTimeout(r, GEOCODE_DELAY_MS));
+          const coords = await geocodeRestaurantByName(rest.name);
+          if (coords) {
+            rest.lat = coords.lat;
+            rest.lon = coords.lon;
+            setCachedCoords(rest.name, coords.lat, coords.lon);
+          }
+        })
+        .catch(() => {
+          /* ignore */
+        })
+        .finally(() => {
+          geocodeInFlight.delete(key);
+          updateRestaurantMarkers();
+        });
+    }
+
+    function normalizeCuisineToken(token) {
+      return String(token || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z\s]/g, "")
+        .replace(/\s+/g, " ");
+    }
+
+    function restaurantMatchesCuisine(rest, selectedCuisine) {
+      const wanted = normalizeCuisineToken(selectedCuisine);
+      if (!wanted) return true;
+      const tokens = Array.isArray(rest.cuisines)
+        ? rest.cuisines.map(normalizeCuisineToken).filter(Boolean)
+        : [];
+      if (wanted === "greek") {
+        return tokens.includes("greek") || tokens.includes("mediterranean");
+      }
+      return tokens.includes(wanted);
+    }
+
+    /**
+     * Map app allergy label (from allergies page) to spreadsheet column name.
+     * @param {string} raw
+     * @returns {string | null}
+     */
+    function allergyLabelToSheetColumn(raw) {
+      const s = String(raw)
+        .trim()
+        .toLowerCase()
+        .replace(/\s+free\s*$/i, "")
+        .replace(/\s+/g, " ")
+        .trim();
+      const map = {
+        gluten: "Gluten-Free",
+        dairy: "Dairy-Free",
+        eggs: "Egg-Free",
+        egg: "Egg-Free",
+        peanuts: "Peanut-Free",
+        peanut: "Peanut-Free",
+        treenuts: "Tree Nut-Free",
+        "tree nuts": "Tree Nut-Free",
+        soy: "Soy-Free",
+        vegetarian: "Vegetarian",
+        shellfish: "Shellfish-Free",
+      };
+      return map[s] || null;
+    }
+
+    /**
+     * Spreadsheet values: Yes, Possible, No, or ⚠️ (treated as Possible for map color).
+     * @returns {"yes" | "possible" | "no" | ""}
+     */
+    function normalizeAccommodationValue(raw) {
+      const s = String(raw ?? "").trim();
+      if (!s) return "";
+      const lower = s.toLowerCase();
+      if (lower === "yes") return "yes";
+      if (lower === "no") return "no";
+      if (lower === "possible") return "possible";
+      if (/[\u26a0]/.test(s) || s.includes("⚠")) return "possible";
+      return "";
+    }
+
+    /**
+     * @param {{ accommodations: Record<string, string> }} rest
+     * @param {string[]} selectedLabels
+     * @returns {"exclude" | "yes" | "possible"}
+     */
+    function classifyRestaurantForAllergies(rest, selectedLabels) {
+      const columns = selectedLabels
+        .map((l) => allergyLabelToSheetColumn(l))
+        .filter(Boolean);
+      if (columns.length === 0) return "exclude";
+
+      let anyPossible = false;
+      for (const col of columns) {
+        const v = normalizeAccommodationValue(rest.accommodations[col]);
+        if (v === "no" || v === "") return "exclude";
+        if (v === "possible") anyPossible = true;
+      }
+      return anyPossible ? "possible" : "yes";
+    }
+
+    async function loadKnoxvilleRestaurants() {
+      try {
+        const res = await fetch("assets/data/restaurants-from-csv.json");
+        if (!res.ok) return;
+        const data = await res.json();
+        knoxvilleRestaurants = Array.isArray(data.restaurants) ? data.restaurants : [];
+        loadGeocodeCache();
+        for (const rest of knoxvilleRestaurants) {
+          const cached = getCachedCoords(rest.name);
+          if (cached) {
+            rest.lat = cached.lat;
+            rest.lon = cached.lon;
+          }
+        }
+      } catch {
+        knoxvilleRestaurants = [];
+      }
+    }
+
+    function toDisplayAllergyLabel(raw) {
+      return String(raw || "")
+        .trim()
+        .replace(/\s+free$/i, "")
+        .toUpperCase();
+    }
+
+    function getVisibleRestaurants() {
+      if (!searchCenter || !knoxvilleRestaurants || knoxvilleRestaurants.length === 0) {
+        return [];
+      }
+      const selectedAllergies = loadSelectedAllergies();
+      if (selectedAllergies.length === 0) return [];
+
+      const radiusM = getDistanceMiles() * 1609.344;
+      const selectedCuisine = cuisineSelect?.value || "";
+      const visible = [];
+
+      for (const rest of knoxvilleRestaurants) {
+        if (!restaurantMatchesCuisine(rest, selectedCuisine)) continue;
+        if (!Number.isFinite(rest.lat) || !Number.isFinite(rest.lon)) {
+          queueRestaurantGeocode(rest);
+          continue;
+        }
+        const dist = haversineMeters(searchCenter.lat, searchCenter.lon, Number(rest.lat), Number(rest.lon));
+        if (dist > radiusM) continue;
+
+        const kind = classifyRestaurantForAllergies(rest, selectedAllergies);
+        if (kind === "exclude") continue;
+        visible.push({ rest, kind, dist });
+      }
+
+      visible.sort((a, b) => a.dist - b.dist || String(a.rest.name).localeCompare(String(b.rest.name)));
+      return visible;
+    }
+
+    function renderRestaurantList() {
+      const selectedAllergies = loadSelectedAllergies();
+      const primaryAllergy = selectedAllergies[0] || "";
+      const primaryColumn = primaryAllergy ? allergyLabelToSheetColumn(primaryAllergy) : "";
+      const primaryLabel = toDisplayAllergyLabel(primaryAllergy);
+      const visible = getVisibleRestaurants();
+
+      if (visible.length === 0) {
+        const msg = selectedAllergies.length
+          ? "No restaurants match current filters."
+          : "Select allergies to show restaurants.";
+        restaurantListEl.innerHTML = `<li class="restaurant-list-empty">${msg}</li>`;
+        return;
+      }
+
+      restaurantListEl.innerHTML = visible
+        .map(({ rest }) => {
+          const safeValue = primaryColumn
+            ? String(rest.accommodations?.[primaryColumn] ?? "Unknown").toUpperCase()
+            : "UNKNOWN";
+          const cuisineLabel =
+            Array.isArray(rest.cuisines) && rest.cuisines.length
+              ? rest.cuisines[0].toUpperCase()
+              : "CUISINE UNKNOWN";
+          return `<li class="restaurant-list-card">
+            <h2 class="restaurant-list-name">${String(rest.name).toUpperCase()}</h2>
+            <p class="restaurant-list-safety">${primaryLabel || "ALLERGY"} ALLERGY SAFE: ${safeValue}</p>
+            <p class="restaurant-list-cuisine">${cuisineLabel}</p>
+            <p class="restaurant-list-address">KNOXVILLE, TN</p>
+          </li>`;
+        })
+        .join("");
+    }
+
+    function updateRestaurantMarkers() {
+      if (!leafletMap || !searchCenter || !knoxvilleRestaurants || knoxvilleRestaurants.length === 0) {
+        renderRestaurantList();
+        return;
+      }
+      const selected = loadSelectedAllergies();
+      if (!restaurantMarkersLayer) {
+        restaurantMarkersLayer = L.layerGroup().addTo(leafletMap);
+      }
+      restaurantMarkersLayer.clearLayers();
+      const visible = getVisibleRestaurants();
+
+      for (const entry of visible) {
+        const { rest, kind } = entry;
+
+        const isYes = kind === "yes";
+        const fill = isYes ? MARKER_PURPLE : MARKER_LIGHT_ORANGE;
+        const stroke = isYes ? MARKER_PURPLE : MARKER_ORANGE_STROKE;
+
+        const marker = L.circleMarker([rest.lat, rest.lon], {
+          radius: isYes ? 9 : 10,
+          color: stroke,
+          weight: 2,
+          fillColor: fill,
+          fillOpacity: 0.92,
+        });
+
+        const lines = selected
+          .map((lab) => {
+            const col = allergyLabelToSheetColumn(lab);
+            if (!col) return "";
+            const cell = rest.accommodations[col] ?? "";
+            return `<div><strong>${lab}</strong>: ${String(cell)}</div>`;
+          })
+          .filter(Boolean);
+
+        const wto = rest.what_to_order
+          ? `<div style="margin-top:0.45rem;font-size:11px;line-height:1.45;color:#831662;opacity:0.95;text-transform:none;letter-spacing:0.02em;">${String(rest.what_to_order)}</div>`
+          : "";
+        const cuisineLine = Array.isArray(rest.cuisines) && rest.cuisines.length
+          ? `<div style="margin-bottom:0.4rem;"><strong>Cuisine:</strong> ${rest.cuisines.join(", ")}</div>`
+          : "";
+
+        const favoriteLabel = isFavoriteRestaurant(rest.name) ? "Unfavorite" : "Favorite";
+        marker.bindPopup(
+          `<div style="font-family:Madimi One,system-ui,sans-serif;font-size:12px;line-height:1.35;color:#831662;text-transform:uppercase;letter-spacing:0.04em;">
+            <div style="font-weight:700;margin-bottom:0.35rem;">${String(rest.name)}</div>
+            ${cuisineLine}
+            ${lines.join("")}
+            ${wto}
+            <button type="button" class="popup-fav-btn" data-restaurant-name="${encodeURIComponent(String(rest.name))}" style="margin-top:0.55rem;border:none;border-radius:999px;padding:0.35rem 0.6rem;background:#ff5010;color:#fff;font:inherit;font-size:11px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;">${favoriteLabel}</button>
+          </div>`
+        );
+        marker.on("popupopen", (event) => {
+          const popupNode = event.popup.getElement();
+          const favBtn = popupNode ? popupNode.querySelector(".popup-fav-btn") : null;
+          if (!favBtn || favBtn.dataset.bound === "1") return;
+          favBtn.dataset.bound = "1";
+          favBtn.addEventListener("click", () => {
+            const encodedName = favBtn.getAttribute("data-restaurant-name") || "";
+            const decodedName = decodeURIComponent(encodedName);
+            const target = knoxvilleRestaurants?.find(
+              (item) => normalizeNameKey(item.name) === normalizeNameKey(decodedName)
+            );
+            if (!target) return;
+            const nowFav = toggleFavoriteRestaurant(target);
+            favBtn.textContent = nowFav ? "Unfavorite" : "Favorite";
+          });
+        });
+        marker.addTo(restaurantMarkersLayer);
+      }
+      renderRestaurantList();
+    }
+
+    const menuBtn = document.getElementById("menu-btn");
+    const infoOuter = document.getElementById("info-box-outer");
+    const distanceSelect = document.getElementById("distance-select");
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const collapsed = infoOuter.classList.toggle("is-collapsed");
+      menuBtn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      setTimeout(() => {
+        leafletMap?.invalidateSize();
+      }, 400);
+    });
+
+    function getDistanceMiles() {
+      const raw = Number.parseInt(distanceSelect.value, 10);
+      if (!Number.isFinite(raw)) return 25;
+      return Math.min(100, Math.max(5, raw));
+    }
+
+    function applyRadius() {
+      if (!leafletMap || !radiusCircle) return;
+      const miles = getDistanceMiles();
+      const meters = miles * 1609.344;
+      radiusCircle.setRadius(meters);
+      leafletMap.fitBounds(radiusCircle.getBounds(), { padding: [22, 22] });
+      updateRestaurantMarkers();
+    }
+
+    distanceSelect.addEventListener("change", () => {
+      applyRadius();
+    });
+
+    const CUISINE_KEY = "searchCuisine";
+    const PRICE_KEY = "searchPrice";
+    const DISTANCE_KEY = "searchDistanceMiles";
+    const cuisineSelect = document.getElementById("cuisine-select");
+    const priceSelect = document.getElementById("price-select");
+
+    function initSearchFilters() {
+      let savedCuisine = "";
+      let savedPrice = "";
+      let savedDistance = "";
+      try {
+        savedCuisine = sessionStorage.getItem(CUISINE_KEY) || "";
+      } catch {
+        /* ignore */
+      }
+      try {
+        savedPrice = sessionStorage.getItem(PRICE_KEY) || "";
+      } catch {
+        /* ignore */
+      }
+      try {
+        savedDistance = sessionStorage.getItem(DISTANCE_KEY) || "";
+      } catch {
+        /* ignore */
+      }
+
+      const distanceOptions = [...distanceSelect.options].map((o) => o.value);
+      distanceSelect.value =
+        savedDistance && distanceOptions.includes(savedDistance) ? savedDistance : "25";
+
+      const cuisineOptions = [...cuisineSelect.options].map((o) => o.value);
+      cuisineSelect.value =
+        savedCuisine.trim() && cuisineOptions.includes(savedCuisine.trim())
+          ? savedCuisine.trim()
+          : "";
+
+      const priceOptions = [...priceSelect.options].map((o) => o.value);
+      priceSelect.value =
+        savedPrice && priceOptions.includes(savedPrice) ? savedPrice : "$25–$50";
+
+      function persistCuisine() {
+        try {
+          sessionStorage.setItem(CUISINE_KEY, cuisineSelect.value);
+        } catch {
+          /* ignore */
+        }
+      }
+
+      function persistPrice() {
+        try {
+          sessionStorage.setItem(PRICE_KEY, priceSelect.value);
+        } catch {
+          /* ignore */
+        }
+      }
+
+      function persistDistance() {
+        try {
+          sessionStorage.setItem(DISTANCE_KEY, distanceSelect.value);
+        } catch {
+          /* ignore */
+        }
+      }
+
+      cuisineSelect.addEventListener("change", persistCuisine);
+      cuisineSelect.addEventListener("change", updateRestaurantMarkers);
+      priceSelect.addEventListener("change", persistPrice);
+      distanceSelect.addEventListener("change", persistDistance);
+    }
+
+    initSearchFilters();
+
+    const neighborhoodRaw = sessionStorage.getItem("searchNeighborhood") || "";
+    const neighborhood = neighborhoodRaw.trim();
+    const statusEl = document.getElementById("map-status");
+    const mapEl = document.getElementById("map");
+    const mapWrapEl = document.getElementById("map-wrap");
+    const listWrapEl = document.getElementById("list-wrap");
+    const restaurantListEl = document.getElementById("restaurant-list");
+    const mapToggleBtn = document.getElementById("toggle-map");
+    const listToggleBtn = document.getElementById("toggle-list");
+    let currentView = "map";
+
+    function setActiveView(view) {
+      currentView = view === "list" ? "list" : "map";
+      const showingMap = currentView === "map";
+      mapWrapEl.hidden = !showingMap;
+      listWrapEl.hidden = showingMap;
+      if (!showingMap) {
+        // Ensure no map/status layer is visible while list view is active.
+        mapEl.hidden = true;
+        statusEl.hidden = true;
+      }
+      mapToggleBtn.classList.toggle("is-active", showingMap);
+      listToggleBtn.classList.toggle("is-active", !showingMap);
+      mapToggleBtn.setAttribute("aria-pressed", showingMap ? "true" : "false");
+      listToggleBtn.setAttribute("aria-pressed", showingMap ? "false" : "true");
+      if (showingMap) {
+        requestAnimationFrame(() => leafletMap?.invalidateSize());
+      }
+    }
+
+    mapToggleBtn.addEventListener("click", () => setActiveView("map"));
+    listToggleBtn.addEventListener("click", () => setActiveView("list"));
+
+    function showStatus(html) {
+      statusEl.innerHTML = html;
+      const showingMap = currentView === "map";
+      statusEl.hidden = !showingMap;
+      mapEl.hidden = true;
+    }
+
+    function showMap() {
+      const showingMap = currentView === "map";
+      statusEl.hidden = true;
+      mapEl.hidden = !showingMap;
+    }
+
+    /**
+     * @param {string} place
+     * @returns {Promise<{ lat: number; lon: number } | null>}
+     */
+    async function geocodeNeighborhood(place) {
+      if (!place) return null;
+      const cached = getCachedNeighborhoodCoords(place);
+      if (cached) return cached;
+
+      const FALLBACK_NEIGHBORHOODS = {
+        bearden: { lat: 35.9358, lon: -84.0024 },
+        "north shore": { lat: 35.9708, lon: -83.9306 },
+        "north knox": { lat: 35.9939, lon: -83.9334 },
+        downtown: { lat: 35.9644, lon: -83.921 },
+        farragut: { lat: 35.8848, lon: -84.155 },
+        "cedar bluff": { lat: 35.9144, lon: -84.0956 },
+        "sequoyah hills": { lat: 35.9417, lon: -83.9642 },
+        "fort sanders": { lat: 35.9609, lon: -83.9416 },
+        "west knox": { lat: 35.9143, lon: -84.0377 },
+      };
+      const normalized = normalizeNeighborhoodKey(place);
+      if (FALLBACK_NEIGHBORHOODS[normalized]) {
+        const coords = FALLBACK_NEIGHBORHOODS[normalized];
+        setCachedNeighborhoodCoords(place, coords);
+        return coords;
+      }
+
+      const headers = { Accept: "application/json", "Accept-Language": "en" };
+      const aliases = [
+        place,
+        place.replace(/\bnorth knox\b/i, "North Knoxville"),
+        place.replace(/\bwest knox\b/i, "West Knoxville"),
+      ];
+      const tryUrls = [
+        ...aliases.map(
+          (p) =>
+            "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=" +
+            encodeURIComponent(p + ", Knoxville, TN")
+        ),
+        ...aliases.map(
+          (p) =>
+            "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=" +
+            encodeURIComponent(p + ", Knox County, TN")
+        ),
+        ...aliases.map(
+          (p) =>
+            "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=" +
+            encodeURIComponent(p + ", Tennessee")
+        ),
+      ];
+      for (const url of tryUrls) {
+        try {
+          const res = await fetch(url, { headers });
+          if (!res.ok) continue;
+          /** @type {{ lat: string; lon: string }[]} */
+          const data = await res.json();
+          if (data && data.length) {
+            const { lat, lon } = data[0];
+            const coords = { lat: parseFloat(lat), lon: parseFloat(lon) };
+            if (Number.isFinite(coords.lat) && Number.isFinite(coords.lon)) {
+              setCachedNeighborhoodCoords(place, coords);
+              return coords;
+            }
+          }
+        } catch {
+          /* try next */
+        }
+      }
+      return null;
+    }
+
+    async function init() {
+      if (!neighborhood) {
+        showStatus(
+          'No neighborhood saved. <a href="next.html">Go back</a> and enter a neighborhood.'
+        );
+        return;
+      }
+
+      let coords;
+      try {
+        coords = await geocodeNeighborhood(neighborhood);
+      } catch {
+        coords = null;
+      }
+
+      if (!coords) {
+        showStatus(
+          'Could not find that neighborhood in Knoxville, TN. <a href="next.html">Try again</a>.'
+        );
+        return;
+      }
+
+      showMap();
+
+      searchCenter = { lat: coords.lat, lon: coords.lon };
+
+      leafletMap = L.map("map", {
+        zoomControl: true,
+        attributionControl: true,
+      }).setView([coords.lat, coords.lon], 13);
+
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        maxZoom: 20,
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      }).addTo(leafletMap);
+
+      const pinOrange = "#ff5010";
+      L.circleMarker([coords.lat, coords.lon], {
+        radius: 10,
+        color: pinOrange,
+        weight: 3,
+        fillColor: pinOrange,
+        fillOpacity: 1,
+      })
+        .addTo(leafletMap)
+        .bindPopup(String(neighborhood).toUpperCase() + ", KNOXVILLE, TN")
+        .openPopup();
+
+      radiusCircle = L.circle([coords.lat, coords.lon], {
+        radius: getDistanceMiles() * 1609.344,
+        color: pinOrange,
+        weight: 2,
+        fillColor: pinOrange,
+        fillOpacity: 0.14,
+      }).addTo(leafletMap);
+      leafletMap.fitBounds(radiusCircle.getBounds(), { padding: [22, 22] });
+
+      await loadKnoxvilleRestaurants();
+      updateRestaurantMarkers();
+
+      requestAnimationFrame(() => {
+        leafletMap?.invalidateSize();
+        setTimeout(() => leafletMap?.invalidateSize(), 200);
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>

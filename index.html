@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Bite Buddy Splash</title>
+  <style>
+    :root {
+      --bg: #feb195;
+      --art-w: 590;
+      --art-h: 1266;
+      --splash-scale: 1;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-tap-highlight-color: transparent;
+      overflow: visible;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      box-sizing: border-box;
+      /* Inset so the scaled artboard fits inside notches / rounded corners without clipping. */
+      padding: max(0px, env(safe-area-inset-top, 0px))
+        max(0px, env(safe-area-inset-right, 0px))
+        max(0px, env(safe-area-inset-bottom, 0px))
+        max(0px, env(safe-area-inset-left, 0px));
+      /* Let artwork paint past strict boxes (e.g. drop shadows); no page scroll lock. */
+      overflow-x: visible;
+      overflow-y: visible;
+    }
+
+    /*
+      Mount box = scaled artboard size so layout matches the visible pixels (no overflow
+      from an unscaled 590×1266 flex item). Stage is full artboard; transform scales it.
+    */
+    .splash-mount {
+      width: calc(var(--art-w) * var(--splash-scale) * 1px);
+      height: calc(var(--art-h) * var(--splash-scale) * 1px);
+      flex-shrink: 0;
+      overflow: visible;
+    }
+
+    .splash-stage {
+      position: relative;
+      width: calc(var(--art-w) * 1px);
+      height: calc(var(--art-h) * 1px);
+      transform: scale(var(--splash-scale));
+      transform-origin: top left;
+      cursor: pointer;
+      will-change: transform;
+      overflow: visible;
+    }
+
+    .splash-art {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .splash-art img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+
+    .splash-stage.is-swiping {
+      animation: swipeUpOut 620ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    }
+
+    @keyframes swipeUpOut {
+      0% {
+        transform: scale(var(--splash-scale)) translateY(0);
+      }
+      100% {
+        transform: scale(var(--splash-scale)) translateY(-120vh);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .splash-stage.is-swiping {
+        animation: none;
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="splash-mount">
+    <main
+      class="splash-stage"
+      id="splash"
+      role="button"
+      tabindex="0"
+      aria-label="Open welcome page"
+    >
+      <figure class="splash-art" aria-hidden="true">
+        <img
+          id="splash-art-img"
+          src="assets/splash/splash-composite.png"
+          width="590"
+          height="1266"
+          alt=""
+        />
+      </figure>
+    </main>
+  </div>
+
+  <script>
+    const splash = document.getElementById("splash");
+    const splashArtImg = document.getElementById("splash-art-img");
+    const SWIPE_MS = 620;
+    const BITE_PLAY_MS = 1000;
+    let isSwiping = false;
+    let biteFlow = false;
+
+    function setSplashScale() {
+      const root = document.documentElement;
+      const rs = getComputedStyle(root);
+      const w = parseFloat(rs.getPropertyValue("--art-w")) || 590;
+      const h = parseFloat(rs.getPropertyValue("--art-h")) || 1266;
+      const box = document.body.getBoundingClientRect();
+      const availW = box.width;
+      const availH = box.height;
+      const sx = availW / w;
+      const sy = availH / h;
+      const s = Math.min(sx, sy);
+      root.style.setProperty("--splash-scale", String(s));
+    }
+
+    function layoutSplash() {
+      setSplashScale();
+    }
+
+    splashArtImg.addEventListener("load", layoutSplash);
+    if (splashArtImg.complete) layoutSplash();
+    window.addEventListener("resize", setSplashScale);
+
+    const BITE_SOUND_SRC = "assets/sounds/bite-apple.wav";
+    let biteAudio = null;
+
+    function playBiteSoundToEnd() {
+      return new Promise((resolve) => {
+        let settled = false;
+        let capTimer = 0;
+        let fallbackTimer = 0;
+
+        function finish() {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(capTimer);
+          window.clearTimeout(fallbackTimer);
+          audio.removeEventListener("ended", onEnded);
+          audio.removeEventListener("error", onError);
+          try {
+            audio.pause();
+          } catch (_) {
+            /* ignore */
+          }
+          resolve();
+        }
+
+        if (!biteAudio) {
+          biteAudio = new Audio(BITE_SOUND_SRC);
+          biteAudio.preload = "auto";
+        }
+        const audio = biteAudio;
+
+        function onEnded() {
+          finish();
+        }
+        function onError() {
+          finish();
+        }
+
+        audio.addEventListener("ended", onEnded);
+        audio.addEventListener("error", onError);
+
+        capTimer = window.setTimeout(finish, BITE_PLAY_MS);
+        fallbackTimer = window.setTimeout(finish, BITE_PLAY_MS + 3000);
+
+        audio.currentTime = 0;
+        audio.volume = 1;
+        try {
+          const pr = audio.play();
+          if (pr && typeof pr.catch === "function") pr.catch(() => finish());
+        } catch (_) {
+          finish();
+        }
+      });
+    }
+
+    async function goHome() {
+      if (isSwiping || biteFlow) return;
+      biteFlow = true;
+      try {
+        await playBiteSoundToEnd();
+        isSwiping = true;
+      } finally {
+        biteFlow = false;
+      }
+      splash.classList.add("is-swiping");
+      window.setTimeout(() => {
+        window.location.replace("home.html");
+      }, SWIPE_MS);
+    }
+
+    splash.addEventListener("click", () => {
+      void goHome();
+    });
+    splash.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        void goHome();
+      }
+    });
+  </script>
+</body>
+</html>

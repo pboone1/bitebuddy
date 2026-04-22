@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Bite Buddy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffeadd;
+      --purple-dark: #831662;
+      --orange-soft: #feb195;
+      --accent-orange: #ff5010;
+      --beige-text: #fff9f5;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body,
+    button {
+      font-family: "Madimi One", system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--purple-dark);
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      width: 100%;
+      max-width: 28rem;
+      margin-inline: auto;
+      padding: max(1.35rem, env(safe-area-inset-top)) 1.35rem 1.5rem;
+      text-align: center;
+    }
+
+    .welcome {
+      margin: 0 0 1rem;
+      font-size: clamp(2.2rem, 10.8vw, 3.15rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-orange);
+    }
+
+    .rule {
+      flex-shrink: 0;
+      display: block;
+      width: 100%;
+      height: 2px;
+      min-height: 2px;
+      background: var(--accent-orange);
+      border-radius: 999px;
+      margin: 0 auto 1.65rem;
+      max-width: 100%;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: 0;
+      padding: 1.05rem 1.15rem;
+      border: none;
+      border-radius: 1rem;
+      background: var(--orange-soft);
+      color: var(--purple-dark);
+      font: inherit;
+      font-size: clamp(0.95rem, 3.8vw, 1.08rem);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a.nav-btn {
+      color: var(--purple-dark);
+    }
+
+    button.nav-btn {
+      cursor: default;
+    }
+
+    .nav-btn:active {
+      opacity: 0.92;
+    }
+
+    .welcome-blurb-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      min-height: 0;
+    }
+
+    .welcome-blurb {
+      flex-shrink: 0;
+      margin: 0 auto;
+      max-width: 100%;
+      padding: 1.05rem 1.15rem;
+      border-radius: 1rem;
+      background: var(--orange-soft);
+      text-align: center;
+    }
+
+    .welcome-blurb-title {
+      margin: 0 0 0.85rem;
+      font-size: clamp(1.65rem, 7vw, 2.15rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-orange);
+    }
+
+    .welcome-blurb-body {
+      margin: 0;
+      font-size: clamp(0.72rem, 2.9vw, 0.88rem);
+      line-height: 1.45;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--purple-dark);
+    }
+
+    .welcome-brand {
+      color: inherit;
+    }
+
+    footer {
+      width: 100%;
+      margin-top: auto;
+      background: var(--purple-dark);
+      padding: 1.55rem 1.35rem max(1.65rem, env(safe-area-inset-bottom));
+      text-align: center;
+    }
+
+    .footer-brand {
+      margin: 0;
+      font-size: clamp(2rem, 10vw, 3rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-orange);
+    }
+
+    
+
+  </style>
+  <script>
+    (() => {
+      const navEntry =
+        typeof performance !== "undefined" && performance.getEntriesByType
+          ? performance.getEntriesByType("navigation")[0]
+          : null;
+      const isReload = navEntry
+        ? navEntry.type === "reload"
+        : typeof performance !== "undefined" && performance.navigation
+          ? performance.navigation.type === 1
+          : false;
+
+      if (isReload) {
+        window.location.replace("index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <h1 class="welcome">Welcome</h1>
+    <div class="rule" aria-hidden="true"></div>
+
+    <ul class="nav-list">
+      <li>
+        <a class="nav-btn" href="communities.html">Communities</a>
+      </li>
+      <li>
+        <a class="nav-btn" href="favorites.html">My favorites</a>
+      </li>
+      <li>
+        <a class="nav-btn" href="next.html">Restaurants</a>
+      </li>
+      <li>
+        <a class="nav-btn" href="allergies.html">My allergies</a>
+      </li>
+    </ul>
+
+    <div class="welcome-blurb-wrap">
+      <section class="welcome-blurb" aria-label="About Bite Buddy">
+        <h2 class="welcome-blurb-title">Bite Buddy</h2>
+        <p class="welcome-blurb-body">
+          Everyone's favorite allergy guide to all things restaurants in Knoxville, TN. <span class="welcome-brand">Bite Buddy</span> has information for the Big 9 food allergies for most locally owned restaurants in Knoxville, TN! Here's to safer meals with <span class="welcome-brand">Bite Buddy</span>!
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p class="footer-brand">Bite Buddy</p>
+  </footer>
+</body>
+</html>

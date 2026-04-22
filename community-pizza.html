@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Italian community — Bite Buddy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffeadd;
+      --purple-dark: #831662;
+      --orange-soft: #feb195;
+      --accent-orange: #ff5010;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-tap-highlight-color: transparent; }
+    body, a { font-family: "Madimi One", system-ui, sans-serif; }
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--purple-dark);
+    }
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 28rem;
+      margin-inline: auto;
+      padding: max(1.2rem, env(safe-area-inset-top)) 1.2rem 1.5rem;
+      position: relative;
+      text-align: center;
+    }
+    .back-link {
+      position: absolute;
+      top: max(0.25rem, env(safe-area-inset-top));
+      left: -0.1rem;
+      width: 2rem;
+      height: 2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--purple-dark);
+      text-decoration: none;
+    }
+    .back-link svg {
+      width: 1.55rem;
+      height: 1.55rem;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    h1 {
+      margin: 1.35rem 0 0.85rem;
+      font-size: clamp(2rem, 9.5vw, 2.85rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .rule {
+      height: 2px;
+      background: var(--orange-soft);
+      border-radius: 999px;
+      margin: 0 auto 1.25rem;
+      max-width: 12rem;
+    }
+    .hero-img {
+      width: min(72%, 14rem);
+      margin: 0 auto 1rem;
+      display: block;
+      filter: drop-shadow(2px 5px 6px rgba(0, 0, 0, 0.14));
+    }
+    .blurb {
+      margin: 0;
+      font-size: clamp(0.95rem, 3.8vw, 1.08rem);
+      line-height: 1.45;
+      opacity: 0.92;
+    }
+    footer {
+      width: 100%;
+      margin-top: auto;
+      background: var(--purple-dark);
+      padding: 1.55rem 1.35rem max(1.65rem, env(safe-area-inset-bottom));
+      text-align: center;
+    
+      cursor: pointer;
+    }
+.footer-brand {
+      margin: 0;
+      font-size: clamp(2rem, 10vw, 3rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-orange);
+    }
+
+</style>
+  <script>
+    (() => {
+      const navEntry =
+        typeof performance !== "undefined" && performance.getEntriesByType
+          ? performance.getEntriesByType("navigation")[0]
+          : null;
+      const isReload = navEntry
+        ? navEntry.type === "reload"
+        : typeof performance !== "undefined" && performance.navigation
+          ? performance.navigation.type === 1
+          : false;
+
+      if (isReload) {
+        window.location.replace("index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <a class="back-link" href="my-communities-cuisine.html" aria-label="Back to cuisine my community">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 4.5L8 12l7.5 7.5" /></svg>
+    </a>
+    <h1>Italian</h1>
+    <div class="rule" aria-hidden="true"></div>
+    <img class="hero-img" src="assets/communities/cuisine/pizza.png" width="216" height="162" alt="" />
+    <p class="blurb">This is a placeholder for the Italian community. Add posts, members, and chat here.</p>
+  </main>
+
+  <footer id="page-footer" role="button" tabindex="0" aria-label="Go back or go to home page">
+    <p class="footer-brand">Bite Buddy</p>
+  </footer>
+
+  <script>
+    function goBackOrHome() {
+      window.location.href = "home.html";
+    }
+
+    const pageFooter = document.getElementById("page-footer");
+    if (pageFooter) {
+      pageFooter.addEventListener("click", goBackOrHome);
+      pageFooter.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          goBackOrHome();
+        }
+      });
+    }
+  </script>
+</body>
+</html>

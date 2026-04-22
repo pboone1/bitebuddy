@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Find restaurants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffeadd;
+      --purple-dark: #831662;
+      --orange-soft: #feb195;
+      --search-orange: #ff5010;
+      --white: #ffffff;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body,
+    button,
+    input,
+    textarea,
+    select {
+      font-family: "Madimi One", system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--purple-dark);
+    }
+
+    .main-column {
+      flex: 1;
+      width: 100%;
+      max-width: 28rem;
+      margin-inline: auto;
+      padding: max(1.25rem, env(safe-area-inset-top)) 1.25rem 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.35rem, 5.5vw, 1.65rem);
+      line-height: 1.15;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--purple-dark);
+    }
+
+    .rule {
+      height: 2px;
+      background: var(--orange-soft);
+      border-radius: 999px;
+      margin-bottom: 1.35rem;
+    }
+
+    .zip-label {
+      display: block;
+      margin-bottom: 0.65rem;
+      font-size: clamp(1rem, 4.2vw, 1.15rem);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--purple-dark);
+    }
+
+    .zip-wrap {
+      background: var(--orange-soft);
+      border-radius: 1rem;
+      padding: 0.85rem 1rem 0.95rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .zip-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      border-radius: 0.65rem;
+      padding: 0.55rem 0.5rem;
+      font: inherit;
+      font-size: clamp(1.35rem, 5.5vw, 1.65rem);
+      letter-spacing: 0.12em;
+      text-align: center;
+      color: var(--search-orange);
+      outline: none;
+    }
+
+    .zip-input::placeholder {
+      color: var(--search-orange);
+      opacity: 0.88;
+    }
+
+    .btn-search {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      max-width: 100%;
+      margin-inline: auto;
+      padding: 0.95rem 1.25rem;
+      border: none;
+      border-radius: 1rem;
+      background: var(--search-orange);
+      color: var(--white);
+      font: inherit;
+      font-size: clamp(1.1rem, 4.2vw, 1.35rem);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+    }
+
+    .btn-search:active {
+      opacity: 0.94;
+    }
+
+    footer {
+      width: 100%;
+      margin-top: auto;
+      background: var(--purple-dark);
+      padding: 1.45rem 1.35rem max(1.55rem, env(safe-area-inset-bottom));
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .footer-heading {
+      margin: 0 0 0.8rem;
+      font-family: "Madimi One", system-ui, sans-serif;
+      font-size: clamp(0.88rem, 3.2vw, 1rem);
+      line-height: 1.35;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--search-orange);
+    }
+
+    .footer-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .footer-list li {
+      margin: 0;
+      font-family: "Madimi One", system-ui, sans-serif;
+      font-size: clamp(1.12rem, 4.8vw, 1.38rem);
+      line-height: 1.3;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--search-orange);
+    }
+
+    .footer-list.is-empty li {
+      font-size: clamp(0.95rem, 3.6vw, 1.08rem);
+      letter-spacing: 0.07em;
+      color: var(--search-orange);
+    }
+
+    
+
+  </style>
+  <script>
+    (() => {
+      const navEntry =
+        typeof performance !== "undefined" && performance.getEntriesByType
+          ? performance.getEntriesByType("navigation")[0]
+          : null;
+      const isReload = navEntry
+        ? navEntry.type === "reload"
+        : typeof performance !== "undefined" && performance.navigation
+          ? performance.navigation.type === 1
+          : false;
+
+      if (isReload) {
+        window.location.replace("index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+  <main class="main-column">
+    <h1>Find restaurants in your area:</h1>
+    <div class="rule" aria-hidden="true"></div>
+
+      <label class="zip-label" for="zip-input">Enter your neighborhood:</label>
+    <div class="zip-wrap">
+      <input
+        id="zip-input"
+        class="zip-input"
+        type="text"
+        autocomplete="address-level2"
+        maxlength="40"
+        placeholder="EX: BEARDEN"
+        aria-label="Neighborhood"
+      />
+    </div>
+
+    <button type="button" class="btn-search" id="btn-search">Search</button>
+  </main>
+
+  <footer id="page-footer" role="button" tabindex="0" aria-label="Go to home page">
+    <p class="footer-heading">Search for:</p>
+    <ul class="footer-list" id="footer-allergies"></ul>
+  </footer>
+
+  <script>
+    function formatAllergyLine(label) {
+      const t = label.trim();
+      if (!t) return "";
+      const u = t.toUpperCase();
+      return u.endsWith(" FREE") ? u : `${u} FREE`;
+    }
+
+    function loadSelectedAllergies() {
+      try {
+        const raw = sessionStorage.getItem("selectedAllergies");
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed.filter((s) => typeof s === "string") : [];
+      } catch {
+        return [];
+      }
+    }
+
+    const footerList = document.getElementById("footer-allergies");
+    const selected = loadSelectedAllergies();
+
+    if (selected.length === 0) {
+      footerList.classList.add("is-empty");
+      const li = document.createElement("li");
+      li.textContent = "No allergies selected yet";
+      footerList.appendChild(li);
+    } else {
+      for (const label of selected) {
+        const li = document.createElement("li");
+        li.textContent = formatAllergyLine(label);
+        footerList.appendChild(li);
+      }
+    }
+
+    const neighborhoodInput = document.getElementById("zip-input");
+    const btnSearch = document.getElementById("btn-search");
+
+    function goResults() {
+      const neighborhood = neighborhoodInput.value.trim();
+      if (!neighborhood) {
+        neighborhoodInput.focus();
+        return;
+      }
+      sessionStorage.setItem("searchNeighborhood", neighborhood);
+      location.href = "results.html";
+    }
+
+    btnSearch.addEventListener("click", goResults);
+    neighborhoodInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        goResults();
+      }
+    });
+
+    const pageFooter = document.getElementById("page-footer");
+    function goHome() {
+      window.location.href = "home.html";
+    }
+    pageFooter?.addEventListener("click", goHome);
+    pageFooter?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        goHome();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Community Topic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffeadd;
+      --panel: #ffffff;
+      --purple-dark: #831662;
+      --orange-soft: #feb195;
+      --accent-orange: #ff5010;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body,
+    a {
+      font-family: "Madimi One", system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      color: var(--purple-dark);
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 28rem;
+      margin-inline: auto;
+      padding: max(1.2rem, env(safe-area-inset-top)) 1.2rem 1.45rem;
+    }
+
+    h1 {
+      margin: 0.8rem 0 0.85rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: clamp(2rem, 10vw, 3rem);
+      line-height: 1.03;
+      color: var(--purple-dark);
+    }
+
+    .rule {
+      height: 2px;
+      border-radius: 999px;
+      background: var(--orange-soft);
+      margin-bottom: 1.2rem;
+    }
+
+    .blog-panel,
+    .qa-panel {
+      background: var(--panel);
+      border-radius: 1rem;
+      padding: 1rem 0.9rem;
+      box-shadow: 0 4px 18px rgba(131, 22, 98, 0.07);
+    }
+
+    .blog-tag {
+      margin: 0;
+      color: var(--accent-orange);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+    }
+
+    .blog-title {
+      margin: 0.28rem 0 0.65rem;
+      color: var(--purple-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: clamp(1.25rem, 6vw, 1.7rem);
+      line-height: 1.08;
+    }
+
+    .blog-copy {
+      margin: 0;
+      color: var(--purple-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-size: clamp(0.79rem, 3.35vw, 0.94rem);
+      line-height: 1.38;
+      opacity: 0.94;
+    }
+
+    .blog-copy + .blog-copy {
+      margin-top: 0.68rem;
+    }
+
+    .qa-panel {
+      margin-top: 0.95rem;
+      padding-bottom: 1rem;
+    }
+
+    .qa-title {
+      margin: 0 0 0.6rem;
+      color: var(--purple-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: clamp(1rem, 4.5vw, 1.2rem);
+      line-height: 1.1;
+    }
+
+    .qa-form {
+      display: grid;
+      gap: 0.45rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .qa-input,
+    .qa-textarea {
+      width: 100%;
+      border: 2px solid rgba(131, 22, 98, 0.22);
+      border-radius: 0.55rem;
+      padding: 0.45rem 0.52rem;
+      background: #fffdfb;
+      color: var(--purple-dark);
+      font: inherit;
+      letter-spacing: 0.02em;
+      outline: none;
+    }
+
+    .qa-input:focus-visible,
+    .qa-textarea:focus-visible {
+      border-color: var(--accent-orange);
+    }
+
+    .qa-input::placeholder,
+    .qa-textarea::placeholder {
+      color: rgba(131, 22, 98, 0.62);
+      text-transform: uppercase;
+    }
+
+    .qa-textarea {
+      min-height: 4rem;
+      resize: vertical;
+    }
+
+    .qa-submit {
+      justify-self: center;
+      border: none;
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      background: var(--accent-orange);
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .qa-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.55rem;
+      max-height: 16rem;
+      overflow-y: auto;
+    }
+
+    .qa-empty {
+      margin: 0;
+      color: rgba(131, 22, 98, 0.78);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.76rem;
+      line-height: 1.3;
+      text-align: center;
+      padding: 0.4rem 0.2rem;
+    }
+
+    .qa-item {
+      background: #fff7f2;
+      border: 1px solid rgba(131, 22, 98, 0.15);
+      border-radius: 0.65rem;
+      padding: 0.55rem;
+    }
+
+    .qa-question-meta,
+    .qa-answer-meta {
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.66rem;
+      color: rgba(131, 22, 98, 0.76);
+    }
+
+    .qa-question-text,
+    .qa-answer-text {
+      margin: 0.2rem 0 0;
+      color: var(--purple-dark);
+      letter-spacing: 0.02em;
+      font-size: 0.8rem;
+      line-height: 1.32;
+      text-transform: uppercase;
+    }
+
+    .qa-answer-block {
+      margin-top: 0.55rem;
+      padding-top: 0.45rem;
+      border-top: 1px solid rgba(131, 22, 98, 0.13);
+    }
+
+    .qa-answer-form {
+      margin-top: 0.55rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.35rem;
+    }
+
+    .qa-answer-input {
+      border: 1px solid rgba(131, 22, 98, 0.22);
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.45rem;
+      background: #fff;
+      color: var(--purple-dark);
+      font: inherit;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      outline: none;
+    }
+
+    .qa-answer-button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.36rem 0.62rem;
+      background: var(--orange-soft);
+      color: var(--purple-dark);
+      font: inherit;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+    }
+
+    .communities-prev {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      margin: 1.45rem auto 0;
+      width: fit-content;
+      color: var(--accent-orange);
+      text-decoration: none;
+      font-size: clamp(1.1rem, 4.9vw, 1.38rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .communities-prev .arrow {
+      font-size: 1.25em;
+      line-height: 1;
+    }
+    footer {
+      width: 100%;
+      margin-top: auto;
+      background: var(--purple-dark);
+      padding: 1.55rem 1.35rem max(1.65rem, env(safe-area-inset-bottom));
+      text-align: center;
+    
+      cursor: pointer;
+    }
+.footer-brand {
+      margin: 0;
+      font-size: clamp(2rem, 10vw, 3rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-orange);
+    }
+
+</style>
+</head>
+<body>
+  <main>
+    <h1>My community!</h1>
+    <div class="rule" aria-hidden="true"></div>
+
+    <section class="blog-panel" aria-label="Topic community article">
+      <p class="blog-tag" id="blog-tag">Allergy Spotlight</p>
+      <h2 class="blog-title" id="blog-title">Kiwi</h2>
+      <p class="blog-copy" id="blog-copy-1"></p>
+      <p class="blog-copy" id="blog-copy-2"></p>
+      <p class="blog-copy" id="blog-copy-3"></p>
+    </section>
+
+    <section class="qa-panel" aria-label="Topic questions and answers">
+      <h3 class="qa-title" id="qa-title">Topic Q&A</h3>
+      <form id="qa-form" class="qa-form">
+        <input id="qa-name-input" class="qa-input" type="text" maxlength="40" placeholder="Your name (optional)" aria-label="Your name" />
+        <textarea id="qa-question-input" class="qa-textarea" maxlength="300" placeholder="Ask a question for this topic..." aria-label="Question" required></textarea>
+        <button type="submit" class="qa-submit">Post Question</button>
+      </form>
+      <ul id="qa-list" class="qa-list" aria-live="polite"></ul>
+    </section>
+
+    <a class="communities-prev" id="back-link" href="my-communities.html" aria-label="Go back to my community page">
+      <span class="arrow" aria-hidden="true">&lt;</span>
+      <span id="back-label">Allergies</span>
+    </a>
+  </main>
+
+  <footer id="page-footer" role="button" tabindex="0" aria-label="Go back or go to home page">
+    <p class="footer-brand">Bite Buddy</p>
+  </footer>
+
+  <script>
+    (() => {
+      const navEntry =
+        typeof performance !== "undefined" && performance.getEntriesByType
+          ? performance.getEntriesByType("navigation")[0]
+          : null;
+      const isReload = navEntry
+        ? navEntry.type === "reload"
+        : typeof performance !== "undefined" && performance.navigation
+          ? performance.navigation.type === 1
+          : false;
+      if (isReload) window.location.replace("index.html");
+    })();
+
+    const TOPICS = {
+      allergy: {
+        kiwi: ["Kiwi", "Tangy and bright, kiwi can be tricky for some allergy-prone eaters, especially in smoothie bowls and fruit salads where cross-contact happens fast.", "Ask for fresh utensils and clean prep boards when ordering fruit-heavy dishes so your request is clear before plating starts.", "Use this thread to share places where staff took fruit allergy notes seriously and handled substitutions well."],
+        shellfish: ["Shellfish", "Shellfish concerns often come from shared fryers and grill surfaces, especially in mixed seafood kitchens with rotating specials.", "When ordering, ask how proteins are separated and whether sauces are finished in shared pans with shellfish ingredients.", "Share neighborhood spots that communicate shellfish prep clearly and can guide safer alternatives."],
+        gluten: ["Gluten", "Gluten concerns can show up in buns, breading, and hidden flour in soups, gravies, and house sauces.", "A good strategy is to ask for ingredient-level confirmation instead of only menu labels, especially on seasonal items.", "Post your safest swaps and go-to orders so others can order with more confidence."],
+        vegetarian: ["Vegetarian", "Vegetarian diners often navigate hidden meat broths, shared prep surfaces, and add-ons like bacon crumbles or meat-based sauces.", "Ask kitchens to confirm broth bases, protein substitutions, and dedicated pans for veggie-specific prep.", "Use this space to compare vegetarian-friendly spots and reliable custom orders."],
+        dairy: ["Dairy", "Dairy-sensitive diners often need details on sauces, dressings, and hidden cheese components beyond obvious menu mentions.", "Ask whether dairy-free substitutions are true replacements or if shared equipment is still used in finishing.", "Share restaurants where dairy modifications stay consistent across visits."],
+        nuts: ["Nuts", "Nut concerns show up in pesto, dessert toppings, and sauces where nuts are blended rather than visible.", "Ask whether nut oils or nut-based sauces are made in-house and how tools are cleaned between orders.", "Use this thread to highlight restaurants that disclose nut ingredients accurately."],
+        shrimp: ["Shrimp", "Shrimp concerns often come from shared fryers and grill surfaces, especially in mixed seafood kitchens with rotating specials.", "When ordering, ask how proteins are separated and whether sauces are finished in shared pans with shellfish ingredients.", "Share neighborhood spots that communicate shellfish prep clearly and can guide safer alternatives."],
+        bread: ["Bread", "Bread and gluten concerns can show up in buns, breading, and hidden flour in soups, gravies, and house sauces.", "A good strategy is to ask for ingredient-level confirmation instead of only menu labels, especially on seasonal items.", "Post your safest swaps and go-to orders so others can order with more confidence."],
+        steak: ["Steak", "Steak dishes are often simple but can include marinades, compound butters, or seasoning blends that contain unexpected allergens.", "Request plain preparation first, then add verified sides and sauces once the kitchen confirms ingredients.", "Use this space to compare steak spots that handle custom prep requests well."],
+        cheese: ["Cheese", "Dairy-sensitive diners often need details on sauces, dressings, and hidden cheese components beyond obvious menu mentions.", "Ask whether dairy-free substitutions are true replacements or if shared equipment is still used in finishing.", "Share restaurants where dairy modifications stay consistent across visits."],
+        egg: ["Egg", "Egg ingredients can appear in batters, aiolis, fresh pasta, and baked add-ons that are easy to overlook during ordering.", "Call out egg allergies clearly and ask about binder ingredients in patties and breaded items.", "Drop helpful egg-free menu wins so others can build a reliable shortlist."],
+        almond: ["Almond", "Almond and tree nut concerns show up in pesto, dessert toppings, and sauces where nuts are blended rather than visible.", "Ask whether nut oils or nut-based sauces are made in-house and how tools are cleaned between orders.", "Use this thread to highlight restaurants that disclose nut ingredients accurately."],
+        pineapple: ["Pineapple", "Pineapple may seem straightforward, but fruit syrups, salsas, and glaze blends can include it unexpectedly.", "Confirm garnish and sauce components when ordering bowls, tacos, or drinks with tropical profiles.", "Share where teams were proactive about ingredient breakdowns and substitutions."],
+        berries: ["Berries", "Berry ingredients appear in smoothies, dressings, compotes, and desserts where cross-contact can happen quickly.", "Ask if blenders and prep tools are rinsed or fully washed when fruit allergies are involved.", "Post berry-safe recommendations and alert others to high-risk prep setups."]
+      },
+      cuisine: {
+        japanese: ["Japanese Cuisine", "Japanese menus can be very allergy-friendly with simple grilled proteins, but sauces and broths need close attention.", "Ask about soy base ingredients, shared fryers for tempura, and shellfish stock in ramen or soup bases.", "Use this thread to share spots with clear ingredient communication and good substitution options."],
+        chinese: ["Chinese Cuisine", "Chinese restaurants often offer broad options, but sauce bases and thickening agents can hide allergens.", "Request plain stir-fry prep and verify sauces separately so allergies are handled before wok cooking begins.", "Share restaurants that consistently honor allergy notes and modify dishes safely."],
+        american: ["American Cuisine", "American menus offer flexibility, but mixed prep lines can create cross-contact with breading, dairy, or nuts.", "Ask for simple builds, side swaps, and ingredient confirmations for house-made sauces and dressings.", "Drop your most reliable allergy-aware picks in this category."],
+        italian: ["Italian Cuisine", "Italian food can be customizable, but pasta doughs, cream sauces, and breadcrumb finishes need careful checks.", "Ask for ingredient-level confirmation on sauces and whether gluten-free pasta uses separate cooking water.", "Use this thread for trusted Italian spots and safe order strategies."],
+        mexican: ["Mexican Cuisine", "Mexican menus can work well for allergy-conscious diners, especially with corn-forward dishes and clear toppings.", "Confirm fryer sharing, sauce ingredients, and cheese or crema handling when ordering tacos and bowls.", "Share what to order and which locations handle allergy requests best."],
+        mediterranean: ["Mediterranean Cuisine", "Mediterranean meals often have fresh options, but nut sauces, yogurt dressings, and shared grills can be concerns.", "Ask about tahini blends, marinated proteins, and prep surface separation for allergy requests.", "Post your safest bowls, wraps, and substitutions here."],
+        breakfast: ["Breakfast Cuisine", "Breakfast menus often hide allergens in batters, griddles, and sauces even when dishes look simple.", "Ask about shared flat-tops, pancake batter splash zones, and egg or dairy in side items.", "Share allergy-friendly brunch orders and dependable neighborhoods."],
+        french: ["French Cuisine", "French dishes are rich and technique-heavy, which can mean layered ingredients and hidden allergen exposure.", "Request plain preparations when possible and verify stocks, reductions, and butter usage up front.", "Use this space for French restaurants that communicate ingredients clearly."],
+        indian: ["Indian Cuisine", "Indian cuisine offers strong vegetarian and gluten-aware potential, but sauces can vary by kitchen and recipe.", "Ask about nut pastes, dairy bases, and spice blends in each dish rather than assuming standard prep.", "Share favorite dishes and places that handle allergy customization confidently."]
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get("type") === "cuisine" ? "cuisine" : "allergy";
+    const name = (params.get("name") || "").toLowerCase();
+    const group = TOPICS[type];
+    const fallbackKey = Object.keys(group)[0];
+    const topicKey = Object.prototype.hasOwnProperty.call(group, name) ? name : fallbackKey;
+    const topic = group[topicKey];
+    const slug = `${type}-${topicKey}`;
+    const API_ROOT = "/api/neighborhood-qa";
+
+    document.title = `My Community — ${topic[0]}`;
+    document.getElementById("blog-tag").textContent = type === "cuisine" ? "Cuisine Spotlight" : "Allergy Spotlight";
+    document.getElementById("blog-title").textContent = topic[0];
+    document.getElementById("blog-copy-1").textContent = topic[1];
+    document.getElementById("blog-copy-2").textContent = topic[2];
+    document.getElementById("blog-copy-3").textContent = topic[3];
+    document.getElementById("qa-title").textContent = `${topic[0].toUpperCase()} Q&A`;
+
+    const backLink = document.getElementById("back-link");
+    const backLabel = document.getElementById("back-label");
+    if (type === "cuisine") {
+      backLink.href = "my-communities-cuisine.html";
+      backLabel.textContent = "Cuisine";
+    } else {
+      backLink.href = "my-communities.html";
+      backLabel.textContent = "Allergies";
+    }
+
+    const QA_STORAGE_KEY = "topicQaFallbackV1";
+    const qaForm = document.getElementById("qa-form");
+    const qaNameInput = document.getElementById("qa-name-input");
+    const qaQuestionInput = document.getElementById("qa-question-input");
+    const qaList = document.getElementById("qa-list");
+    let usingFallbackStorage = false;
+
+    function loadQaStore() {
+      try {
+        const raw = localStorage.getItem(QA_STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return parsed && typeof parsed === "object" ? parsed : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveQaStore(store) {
+      try {
+        localStorage.setItem(QA_STORAGE_KEY, JSON.stringify(store));
+      } catch {
+        /* ignore */
+      }
+    }
+
+    function getRows(store) {
+      const arr = store[slug];
+      return Array.isArray(arr) ? arr : [];
+    }
+
+    async function fetchQuestions() {
+      if (usingFallbackStorage) return getRows(loadQaStore());
+      try {
+        const res = await fetch(`${API_ROOT}/${encodeURIComponent(slug)}`, { headers: { Accept: "application/json" } });
+        if (!res.ok) throw new Error("Failed");
+        const data = await res.json();
+        return Array.isArray(data.questions) ? data.questions : [];
+      } catch {
+        usingFallbackStorage = true;
+        return getRows(loadQaStore());
+      }
+    }
+
+    async function postQuestion(asker, question) {
+      if (usingFallbackStorage) {
+        const store = loadQaStore();
+        const rows = getRows(store);
+        rows.unshift({ id: crypto.randomUUID(), asker, question, answers: [] });
+        store[slug] = rows;
+        saveQaStore(store);
+        return;
+      }
+      try {
+        const res = await fetch(`${API_ROOT}/${encodeURIComponent(slug)}/questions`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ asker, question })
+        });
+        if (!res.ok) throw new Error("Failed");
+      } catch {
+        usingFallbackStorage = true;
+        await postQuestion(asker, question);
+      }
+    }
+
+    async function postAnswer(questionId, text) {
+      if (usingFallbackStorage) {
+        const store = loadQaStore();
+        const rows = getRows(store);
+        const row = rows.find((r) => String(r.id) === String(questionId));
+        if (!row) return;
+        if (!Array.isArray(row.answers)) row.answers = [];
+        row.answers.push({ id: crypto.randomUUID(), by: "Community Member", text });
+        store[slug] = rows;
+        saveQaStore(store);
+        return;
+      }
+      try {
+        const res = await fetch(`${API_ROOT}/${encodeURIComponent(slug)}/questions/${encodeURIComponent(questionId)}/answers`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ by: "Community Member", text })
+        });
+        if (!res.ok) throw new Error("Failed");
+      } catch {
+        usingFallbackStorage = true;
+        await postAnswer(questionId, text);
+      }
+    }
+
+    async function renderQaList() {
+      const rows = await fetchQuestions();
+      if (rows.length === 0) {
+        qaList.innerHTML = `<li><p class="qa-empty">Be the first to ask about ${topic[0].toUpperCase()}.</p></li>`;
+        return;
+      }
+      qaList.innerHTML = rows.map((entry) => {
+        const qid = String(entry.id || "");
+        const asker = String(entry.asker || "Community Member").toUpperCase();
+        const question = String(entry.question || "").toUpperCase();
+        const answers = Array.isArray(entry.answers) ? entry.answers : [];
+        const answersHtml = answers.map((a) => `<div class="qa-answer-block"><p class="qa-answer-meta">${String(a.by || "Community").toUpperCase()}</p><p class="qa-answer-text">${String(a.text || "").toUpperCase()}</p></div>`).join("");
+        return `<li class="qa-item"><p class="qa-question-meta">${asker}</p><p class="qa-question-text">${question}</p>${answersHtml}<form class="qa-answer-form" data-qid="${qid}"><input class="qa-answer-input" type="text" maxlength="220" placeholder="Write an answer..." aria-label="Answer question" required /><button class="qa-answer-button" type="submit">Answer</button></form></li>`;
+      }).join("");
+    }
+
+    qaForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const question = qaQuestionInput.value.trim();
+      if (!question) return;
+      const asker = qaNameInput.value.trim() || "Community Member";
+      await postQuestion(asker, question);
+      qaQuestionInput.value = "";
+      await renderQaList();
+    });
+
+    qaList.addEventListener("submit", async (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLFormElement) || !target.matches(".qa-answer-form")) return;
+      event.preventDefault();
+      const qid = target.getAttribute("data-qid");
+      if (!qid) return;
+      const answerInput = target.querySelector(".qa-answer-input");
+      if (!(answerInput instanceof HTMLInputElement)) return;
+      const text = answerInput.value.trim();
+      if (!text) return;
+      await postAnswer(qid, text);
+      await renderQaList();
+    });
+
+    renderQaList();
+  </script>
+
+  <script>
+    function goBackOrHome() {
+      window.location.href = "home.html";
+    }
+
+    const pageFooter = document.getElementById("page-footer");
+    if (pageFooter) {
+      pageFooter.addEventListener("click", goBackOrHome);
+      pageFooter.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          goBackOrHome();
+        }
+      });
+    }
+  </script>
+</body>
+</html>
