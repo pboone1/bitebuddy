@@ -84,33 +84,48 @@
       color: var(--accent-orange);
     }
 
-    .search-input {
+    .field-hint {
+      margin: 0.3rem 0 0.45rem;
+      font-size: clamp(0.8rem, 3.2vw, 0.92rem);
+      line-height: 1.3;
+      color: var(--purple-dark);
+      opacity: 0.75;
+    }
+
+    .join-select {
       width: 100%;
+      min-height: 7.5rem;
       border: none;
       border-radius: 0.7rem;
       background: var(--card);
-      padding: 0.92rem 1rem;
+      padding: 0.5rem 0.65rem;
       font: inherit;
-      font-size: clamp(1.25rem, 5.2vw, 1.52rem);
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
+      font-size: clamp(0.95rem, 3.7vw, 1.1rem);
+      line-height: 1.25;
       color: var(--purple-dark);
       outline: none;
     }
 
-    .search-input::placeholder {
-      color: var(--orange-soft);
-      opacity: 1;
+    .join-select option {
+      padding: 0.25rem 0.15rem;
+    }
+
+    .save-status {
+      min-height: 1.2rem;
+      margin-top: 0.75rem;
+      text-align: center;
+      font-size: clamp(0.88rem, 3.5vw, 1rem);
+      color: var(--accent-orange);
     }
 
     .submit-wrap {
-      margin-top: 0.45rem;
+      margin-top: 0.65rem;
       display: flex;
       justify-content: center;
     }
 
-    .btn-search {
-      width: 50%;
+    .btn-save-communities {
+      width: 70%;
       max-width: 100%;
       border: none;
       border-radius: 0.7rem;
@@ -126,7 +141,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .btn-search:active {
+    .btn-save-communities:active {
       opacity: 0.92;
     }
     footer {
@@ -172,28 +187,34 @@
     <div class="rule" aria-hidden="true"></div>
 
     <div class="field">
-      <label class="field-label" for="allergy-search">Search by allergy:</label>
-      <input id="allergy-search" class="search-input" type="text" placeholder="Search" />
+      <label class="field-label" for="join-allergies">Allergy communities</label>
+      <p class="field-hint" id="hint-allergies">Choose one or more. On desktop: hold Ctrl / ⌘ and click. On many phones: tap each line to add.</p>
+      <select id="join-allergies" class="join-select" multiple size="5" aria-describedby="hint-allergies"></select>
     </div>
 
     <div class="field">
-      <label class="field-label" for="neighborhood-search">Search by neighborhood:</label>
-      <input id="neighborhood-search" class="search-input" type="text" placeholder="Search" />
+      <label class="field-label" for="join-neighborhoods">Neighborhood communities</label>
+      <p class="field-hint" id="hint-neighborhoods">Choose one or more. Use Ctrl / ⌘ + click to select multiple on desktop.</p>
+      <select id="join-neighborhoods" class="join-select" multiple size="5" aria-describedby="hint-neighborhoods"></select>
     </div>
 
     <div class="field">
-      <label class="field-label" for="cuisine-search">Search by cuisine:</label>
-      <input id="cuisine-search" class="search-input" type="text" placeholder="Search" />
+      <label class="field-label" for="join-cuisines">Cuisine communities</label>
+      <p class="field-hint" id="hint-cuisines">Choose one or more. Use Ctrl / ⌘ + click to select multiple on desktop.</p>
+      <select id="join-cuisines" class="join-select" multiple size="5" aria-describedby="hint-cuisines"></select>
     </div>
+
+    <p class="save-status" id="join-save-status" role="status" aria-live="polite"></p>
 
     <div class="submit-wrap">
-      <button type="button" class="btn-search">Search</button>
+      <button type="button" class="btn-save-communities" id="join-save-btn">Save my communities</button>
     </div>
   </main>
 
   <footer id="page-footer" role="button" tabindex="0" aria-label="Go back or go to home page">
     <p class="footer-brand">Bite Buddy</p>
   </footer>
+  <script src="js/communities-store.js"></script>
   <script>
     const pageFooter = document.getElementById("page-footer");
     function goBackOrHome() {
@@ -206,6 +227,61 @@
         goBackOrHome();
       }
     });
+
+    (function initJoin() {
+      const { ALLERGY, NEIGHBORHOOD, CUISINE, loadPicks, savePicks } = window.BiteBuddyCommunities;
+      const elAllergies = document.getElementById("join-allergies");
+      const elNeighborhoods = document.getElementById("join-neighborhoods");
+      const elCuisines = document.getElementById("join-cuisines");
+      const statusEl = document.getElementById("join-save-status");
+      const saveBtn = document.getElementById("join-save-btn");
+
+      function fillSelect(select, options) {
+        select.innerHTML = "";
+        options.forEach((o) => {
+          const opt = document.createElement("option");
+          opt.value = o.id;
+          opt.textContent = o.label != null ? o.label : o.dataTitle;
+          select.appendChild(opt);
+        });
+      }
+
+      function applySelections(select, selectedIds) {
+        const set = new Set(selectedIds);
+        Array.from(select.options).forEach((opt) => {
+          opt.selected = set.has(opt.value);
+        });
+      }
+
+      const picks = loadPicks();
+      fillSelect(elAllergies, ALLERGY);
+      fillSelect(elNeighborhoods, NEIGHBORHOOD);
+      fillSelect(elCuisines, CUISINE);
+
+      applySelections(elAllergies, picks.allergies);
+      applySelections(elNeighborhoods, picks.neighborhoods);
+      applySelections(elCuisines, picks.cuisines);
+
+      function selectedValues(select) {
+        return Array.from(select.selectedOptions).map((o) => o.value);
+      }
+
+      saveBtn.addEventListener("click", () => {
+        const next = {
+          allergies: selectedValues(elAllergies),
+          neighborhoods: selectedValues(elNeighborhoods),
+          cuisines: selectedValues(elCuisines),
+        };
+        savePicks(next);
+        const total = next.allergies.length + next.neighborhoods.length + next.cuisines.length;
+        statusEl.textContent = total
+          ? "Saved! Your My communities pages will show " + total + " sticker" + (total === 1 ? "" : "s") + "."
+          : "Saved! Clear selections stay empty on My communities until you choose at least one.";
+        window.setTimeout(() => {
+          statusEl.textContent = "";
+        }, 4500);
+      });
+    })();
   </script>
 </body>
 </html>

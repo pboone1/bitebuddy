@@ -178,6 +178,23 @@
       font-size: 1.25em;
       line-height: 1;
     }
+
+    .empty-communities {
+      margin: 0;
+      padding: 1.1rem 0.9rem;
+      text-align: center;
+      font-size: clamp(1.02rem, 4.2vw, 1.2rem);
+      line-height: 1.35;
+      color: var(--purple-dark);
+    }
+
+    .empty-communities a {
+      color: var(--accent-orange);
+    }
+
+    .sticker-panel.is-empty .sticker-grid {
+      display: none;
+    }
     footer {
       width: 100%;
       margin-top: auto;
@@ -220,72 +237,11 @@
     <h1>My community!</h1>
     <div class="rule" aria-hidden="true"></div>
 
-    <section class="sticker-panel" aria-label="Community food stickers">
-      <ul class="sticker-grid">
-        <li>
-          <div class="sticker-grid-item">
-            <a class="sticker-link" href="community-topic.html?type=allergy&name=vegetarian" aria-label="Vegetarian community" data-title="Vegetarian">
-              <img src="assets/splash/kiwi.png" width="216" height="162" alt="" />
-            </a>
-          </div>
-        </li>
-        <li>
-          <div class="sticker-grid-item">
-            <a class="sticker-link" href="community-topic.html?type=allergy&name=shellfish" aria-label="Shellfish community" data-title="Shellfish">
-              <img src="assets/splash/shrimp.png" width="216" height="162" alt="" />
-            </a>
-          </div>
-        </li>
-        <li>
-          <div class="sticker-grid-item">
-            <a class="sticker-link" href="community-topic.html?type=allergy&name=gluten" aria-label="Gluten community" data-title="Gluten">
-              <img src="assets/splash/bread.png" width="216" height="162" alt="" />
-            </a>
-          </div>
-        </li>
-        <li>
-          <div class="sticker-grid-item">
-            <a class="sticker-link" href="community-topic.html?type=allergy&name=kiwi" aria-label="Kiwi community" data-title="Kiwi">
-              <img src="assets/splash/steak.png" width="216" height="162" alt="" />
-            </a>
-          </div>
-        </li>
-        <li>
-          <div class="sticker-grid-item">
-            <a class="sticker-link" href="community-topic.html?type=allergy&name=dairy" aria-label="Dairy community" data-title="Dairy">
-              <img src="assets/splash/cheese.png" width="216" height="162" alt="" />
-            </a>
-          </div>
-        </li>
-        <li>
-          <div class="sticker-grid-item">
-            <a class="sticker-link" href="community-topic.html?type=allergy&name=egg" aria-label="Egg community" data-title="Egg">
-              <img src="assets/splash/egg.png" width="216" height="162" alt="" />
-            </a>
-          </div>
-        </li>
-        <li>
-          <div class="sticker-grid-item">
-            <a class="sticker-link" href="community-topic.html?type=allergy&name=nuts" aria-label="Nuts community" data-title="Nuts">
-              <img src="assets/splash/almond.png" width="216" height="162" alt="" />
-            </a>
-          </div>
-        </li>
-        <li>
-          <div class="sticker-grid-item">
-            <a class="sticker-link" href="community-topic.html?type=allergy&name=pineapple" aria-label="Pineapple community" data-title="Pineapple">
-              <img src="assets/splash/pineapple.png" width="216" height="162" alt="" />
-            </a>
-          </div>
-        </li>
-        <li>
-          <div class="sticker-grid-item">
-            <a class="sticker-link" href="community-topic.html?type=allergy&name=berries" aria-label="Berries community" data-title="Berries">
-              <img src="assets/splash/blackberry.png" width="216" height="162" alt="" />
-            </a>
-          </div>
-        </li>
-      </ul>
+    <section class="sticker-panel" id="allergy-joined-section" aria-label="Community food stickers">
+      <p class="empty-communities" id="allergy-joined-empty" hidden>
+        No allergy communities yet. <a href="join-community.html">Join communities</a> to pick your stickers.
+      </p>
+      <ul class="sticker-grid" id="allergy-joined-list"></ul>
     </section>
 
     <a class="communities-next" href="my-communities-neighborhood.html" aria-label="Go to neighborhood my community page">
@@ -297,6 +253,7 @@
   <footer id="page-footer" role="button" tabindex="0" aria-label="Go back or go to home page">
     <p class="footer-brand">Bite Buddy</p>
   </footer>
+  <script src="js/communities-store.js"></script>
   <script>
     const pageFooter = document.getElementById("page-footer");
     function goBackOrHome() {
@@ -309,6 +266,41 @@
         goBackOrHome();
       }
     });
+
+    function renderJoinedAllergies() {
+      const { loadPicks, ALLERGY_BY_ID } = window.BiteBuddyCommunities;
+      const list = document.getElementById("allergy-joined-list");
+      const section = document.getElementById("allergy-joined-section");
+      const empty = document.getElementById("allergy-joined-empty");
+      const ids = loadPicks().allergies;
+      list.innerHTML = "";
+      if (!ids.length) {
+        section.classList.add("is-empty");
+        empty.hidden = false;
+        return;
+      }
+      section.classList.remove("is-empty");
+      empty.hidden = true;
+      ids.forEach((id) => {
+        const item = ALLERGY_BY_ID.get(id);
+        if (!item) return;
+        const li = document.createElement("li");
+        li.innerHTML =
+          '<div class="sticker-grid-item"><a class="sticker-link" href="' +
+          item.href +
+          '" aria-label="' +
+          item.dataTitle +
+          ' community" data-title="' +
+          item.dataTitle +
+          '"><img src="' +
+          item.img +
+          '" width="216" height="162" alt="" /></a></div>';
+        list.appendChild(li);
+      });
+    }
+    renderJoinedAllergies();
+    window.addEventListener("pageshow", renderJoinedAllergies);
+    window.addEventListener("storage", renderJoinedAllergies);
   </script>
 </body>
 </html>

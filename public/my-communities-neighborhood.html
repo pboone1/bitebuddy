@@ -145,6 +145,23 @@
       opacity: 0.92;
     }
 
+    .empty-communities {
+      margin: 0;
+      padding: 1.1rem 0.9rem;
+      text-align: center;
+      font-size: clamp(1.02rem, 4.2vw, 1.2rem);
+      line-height: 1.35;
+      color: var(--purple-dark);
+    }
+
+    .empty-communities a {
+      color: var(--accent-orange);
+    }
+
+    .neighborhood-panel.is-empty .neighborhood-grid {
+      display: none;
+    }
+
     footer {
       width: 100%;
       margin-top: auto;
@@ -186,18 +203,11 @@
     <h1>My community!</h1>
     <div class="rule" aria-hidden="true"></div>
 
-    <section class="neighborhood-panel" aria-label="Neighborhood communities">
-      <ul class="neighborhood-grid">
-        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=bearden">Bearden</a></li>
-        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=north-shore">North Shore</a></li>
-        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=north-knox">North Knox</a></li>
-        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=downtown">Downtown</a></li>
-        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=farragut">Farragut</a></li>
-        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=cedar-bluff">Cedar Bluff</a></li>
-        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=sequoyah-hills">Sequoyah Hills</a></li>
-        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=fort-sanders">Fort Sanders</a></li>
-        <li class="neighborhood-item"><a class="neighborhood-link" href="community-neighborhood.html?name=west-knox">West Knox</a></li>
-      </ul>
+    <section class="neighborhood-panel" id="neighborhood-joined-section" aria-label="Neighborhood communities">
+      <p class="empty-communities" id="neighborhood-joined-empty" hidden>
+        No neighborhood communities yet. <a href="join-community.html">Join communities</a> to add yours.
+      </p>
+      <ul class="neighborhood-grid" id="neighborhood-joined-list"></ul>
     </section>
 
     <div class="communities-nav" aria-label="Neighborhood page navigation">
@@ -210,6 +220,7 @@
   <footer id="page-footer" role="button" tabindex="0" aria-label="Go back or go to home page">
     <p class="footer-brand">Bite Buddy</p>
   </footer>
+  <script src="js/communities-store.js"></script>
   <script>
     const pageFooter = document.getElementById("page-footer");
     function goBackOrHome() {
@@ -222,6 +233,38 @@
         goBackOrHome();
       }
     });
+
+    function renderJoinedNeighborhoods() {
+      const { loadPicks, NEIGHBORHOOD_BY_ID } = window.BiteBuddyCommunities;
+      const list = document.getElementById("neighborhood-joined-list");
+      const section = document.getElementById("neighborhood-joined-section");
+      const empty = document.getElementById("neighborhood-joined-empty");
+      const ids = loadPicks().neighborhoods;
+      list.innerHTML = "";
+      if (!ids.length) {
+        section.classList.add("is-empty");
+        empty.hidden = false;
+        return;
+      }
+      section.classList.remove("is-empty");
+      empty.hidden = true;
+      ids.forEach((id) => {
+        const item = NEIGHBORHOOD_BY_ID.get(id);
+        if (!item) return;
+        const li = document.createElement("li");
+        li.className = "neighborhood-item";
+        const a = document.createElement("a");
+        a.className = "neighborhood-link";
+        a.href = item.href;
+        a.textContent = item.label;
+        a.setAttribute("aria-label", item.label + " neighborhood community");
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+    }
+    renderJoinedNeighborhoods();
+    window.addEventListener("pageshow", renderJoinedNeighborhoods);
+    window.addEventListener("storage", renderJoinedNeighborhoods);
   </script>
 </body>
 </html>
