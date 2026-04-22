@@ -119,6 +119,20 @@
       color: var(--accent-orange);
     }
 
+    .save-status a.save-status-link {
+      display: inline-block;
+      margin-top: 0.15rem;
+      padding: 0.4rem 0.35rem;
+      color: var(--accent-orange);
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .save-status a.save-status-link:active {
+      opacity: 0.88;
+    }
+
     .submit-wrap {
       margin-top: 0.45rem;
       display: flex;
@@ -269,17 +283,8 @@
           cuisines: selectedFromList(elCuisines),
         };
         savePicks(next);
-        const total = next.allergies.length + next.neighborhoods.length + next.cuisines.length;
-        statusEl.textContent = total
-          ? "SAVED! YOUR MY COMMUNITIES PAGES WILL SHOW " +
-            total +
-            " STICKER" +
-            (total === 1 ? "" : "S") +
-            "."
-          : "SAVED! CLEAR SELECTIONS STAY EMPTY ON MY COMMUNITIES UNTIL YOU CHOOSE AT LEAST ONE.";
-        window.setTimeout(() => {
-          statusEl.textContent = "";
-        }, 4500);
+        statusEl.innerHTML =
+          '<a class="save-status-link" href="my-communities.html">SAVED! GO TO MY COMMUNITIES</a>';
       });
     })();
   </script>
