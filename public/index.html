@@ -4,11 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Bite Buddy Splash</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap"
+    rel="stylesheet"
+  />
   <style>
     :root {
       --bg: #feb195;
-      --art-w: 590;
-      --art-h: 1266;
+      /* iPhone 17 - 1 artboard */
+      --art-w: 706;
+      --art-h: 1115;
       --splash-scale: 1;
     }
 
@@ -31,20 +38,14 @@
       justify-content: center;
       background: var(--bg);
       box-sizing: border-box;
-      /* Inset so the scaled artboard fits inside notches / rounded corners without clipping. */
       padding: max(0px, env(safe-area-inset-top, 0px))
         max(0px, env(safe-area-inset-right, 0px))
         max(0px, env(safe-area-inset-bottom, 0px))
         max(0px, env(safe-area-inset-left, 0px));
-      /* Let artwork paint past strict boxes (e.g. drop shadows); no page scroll lock. */
       overflow-x: visible;
       overflow-y: visible;
     }
 
-    /*
-      Mount box = scaled artboard size so layout matches the visible pixels (no overflow
-      from an unscaled 590×1266 flex item). Stage is full artboard; transform scales it.
-    */
     .splash-mount {
       width: calc(var(--art-w) * var(--splash-scale) * 1px);
       height: calc(var(--art-h) * var(--splash-scale) * 1px);
@@ -63,19 +64,142 @@
       overflow: visible;
     }
 
-    .splash-art {
+    .splash-layer,
+    .splash-title {
       position: absolute;
-      inset: 0;
       margin: 0;
-      pointer-events: none;
-      overflow: visible;
+      display: block;
     }
 
-    .splash-art img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: fill;
+    .splash-layer {
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .splash-layer--hidden {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-title {
+      left: 172px;
+      top: 225px;
+      width: 354px;
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      font-family: "Madimi One", system-ui, sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 67px;
+      line-height: 1.05;
+      text-align: center;
+      color: #831662;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    /* z-order: back → front (Figma list order) */
+    .l-0686 {
+      z-index: 1;
+      left: 232px;
+      top: 680px;
+      width: 430px;
+      height: 323px;
+      background-image: url("assets/splash/IMG_0686.png");
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+    }
+    .l-0675 {
+      z-index: 2;
+      left: 237px;
+      top: 353px;
+      width: 559px;
+      height: 419px;
+      background-image: url("assets/splash/IMG_0675.png");
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.12));
+    }
+    .l-0688 {
+      z-index: 3;
+      left: -147px;
+      top: 359px;
+      width: 491.51px;
+      height: 368.63px;
+      background-image: url("assets/splash/IMG_0688.png");
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+      transform: rotate(-29.4deg);
+      transform-origin: center center;
+    }
+    .l-0682 {
+      z-index: 4;
+      left: 237px;
+      top: -45px;
+      width: 289px;
+      height: 217px;
+      background-image: url("assets/splash/IMG_0682.png");
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+    }
+    .l-0679 {
+      z-index: 5;
+      left: 75px;
+      top: 717px;
+      width: 275px;
+      height: 207px;
+      background-image: url("assets/splash/IMG_0679.png");
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+      transform: rotate(-97.24deg);
+      transform-origin: center center;
+    }
+    .l-0677 {
+      z-index: 6;
+      left: 147px;
+      top: 241px;
+      width: 433px;
+      height: 325px;
+      background-image: url("assets/splash/IMG_0677.png");
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+    }
+    .l-0684 {
+      z-index: 7;
+      left: -119px;
+      top: 172px;
+      width: 418px;
+      height: 314px;
+      background-image: url("assets/splash/IMG_0684.png");
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+      transform: rotate(-17.25deg);
+      transform-origin: center center;
+    }
+    .l-0673 {
+      z-index: 8;
+      left: 61px;
+      top: 12px;
+      width: 272px;
+      height: 204px;
+      background-image: url("assets/splash/IMG_0673.png");
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+      transform: rotate(-9.63deg);
+      transform-origin: center center;
+    }
+    .l-0674 {
+      z-index: 9;
+      left: 363px;
+      top: 29px;
+      width: 334px;
+      height: 250px;
+      background-image: url("assets/splash/IMG_0674.png");
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+    }
+    .l-0689 {
+      z-index: 0;
+      left: -1px;
+      top: 184px;
+      width: 433px;
+      height: 325px;
+      background-image: url("assets/splash/IMG_0689.png");
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
     }
 
     .splash-stage.is-swiping {
@@ -106,23 +230,27 @@
       id="splash"
       role="button"
       tabindex="0"
-      aria-label="Open welcome page"
+      aria-labelledby="splash-title"
     >
-      <figure class="splash-art" aria-hidden="true">
-        <img
-          id="splash-art-img"
-          src="assets/splash/splash-composite.png"
-          width="590"
-          height="1266"
-          alt=""
-        />
-      </figure>
+      <span class="splash-layer l-0686" aria-hidden="true"></span>
+      <span class="splash-layer l-0675" aria-hidden="true"></span>
+      <span class="splash-layer l-0688" aria-hidden="true"></span>
+      <span class="splash-layer l-0682" aria-hidden="true"></span>
+      <span class="splash-layer l-0679" aria-hidden="true"></span>
+      <span class="splash-layer l-0677" aria-hidden="true"></span>
+      <span class="splash-layer l-0684" aria-hidden="true"></span>
+      <span class="splash-layer l-0673" aria-hidden="true"></span>
+      <span class="splash-layer l-0674" aria-hidden="true"></span>
+      <h1 class="splash-title" id="splash-title">BITE BUDDY</h1>
+      <span
+        class="splash-layer l-0689 splash-layer--hidden"
+        aria-hidden="true"
+      ></span>
     </main>
   </div>
 
   <script>
     const splash = document.getElementById("splash");
-    const splashArtImg = document.getElementById("splash-art-img");
     const SWIPE_MS = 620;
     const BITE_PLAY_MS = 1000;
     let isSwiping = false;
@@ -131,8 +259,8 @@
     function setSplashScale() {
       const root = document.documentElement;
       const rs = getComputedStyle(root);
-      const w = parseFloat(rs.getPropertyValue("--art-w")) || 590;
-      const h = parseFloat(rs.getPropertyValue("--art-h")) || 1266;
+      const w = parseFloat(rs.getPropertyValue("--art-w")) || 706;
+      const h = parseFloat(rs.getPropertyValue("--art-h")) || 1115;
       const box = document.body.getBoundingClientRect();
       const availW = box.width;
       const availH = box.height;
@@ -146,9 +274,10 @@
       setSplashScale();
     }
 
-    splashArtImg.addEventListener("load", layoutSplash);
-    if (splashArtImg.complete) layoutSplash();
+    window.addEventListener("load", layoutSplash);
     window.addEventListener("resize", setSplashScale);
+    if (document.readyState === "complete") layoutSplash();
+    else setSplashScale();
 
     const BITE_SOUND_SRC = "assets/sounds/bite-apple.wav";
     let biteAudio = null;
