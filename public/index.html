@@ -92,8 +92,10 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="css/phone-mockup.css" />
 </head>
 <body>
+  <div class="app-device app-device--splash">
   <div class="splash-mount">
     <main
       class="splash-stage"
@@ -130,7 +132,10 @@
       const rs = getComputedStyle(root);
       const w = parseFloat(rs.getPropertyValue("--art-w")) || 470;
       const h = parseFloat(rs.getPropertyValue("--art-h")) || 1024;
-      const box = document.body.getBoundingClientRect();
+      const shell = document.querySelector(".app-device");
+      const box = shell
+        ? shell.getBoundingClientRect()
+        : document.body.getBoundingClientRect();
       const availW = box.width;
       const availH = box.height;
       const sx = availW / w;
@@ -230,5 +235,6 @@
       }
     });
   </script>
+  </div>
 </body>
 </html>
