@@ -177,6 +177,26 @@
       color: var(--accent-orange);
     }
 
+    /* Phone mockup: long lists scroll inside main (footer stays); no visible scrollbar */
+    @media (min-width: 640px) {
+      .page-join .app-device {
+        overflow: hidden;
+      }
+
+      .page-join .app-device main {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .page-join .app-device main::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
 </style>
   <script>
     (() => {
@@ -197,7 +217,7 @@
   </script>
   <link rel="stylesheet" href="css/phone-mockup.css" />
 </head>
-<body>
+<body class="page-join">
   <div class="app-device">
   <main>
     <h1>Join a community!</h1>
