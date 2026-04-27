@@ -116,6 +116,8 @@
     const splashArt = document.getElementById("splash-art");
     const SWIPE_MS = 620;
     const BITE_PLAY_MS = 1000;
+    /** Multiply fit-to-viewport scale by this (1.3 = 30% larger). */
+    const SPLASH_SCALE_BOOST = 1.3;
     let isSwiping = false;
     let biteFlow = false;
 
@@ -129,7 +131,7 @@
       const availH = box.height;
       const sx = availW / w;
       const sy = availH / h;
-      const s = Math.min(sx, sy);
+      const s = Math.min(sx, sy) * SPLASH_SCALE_BOOST;
       root.style.setProperty("--splash-scale", String(s));
     }
 
