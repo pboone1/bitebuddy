@@ -21,11 +21,15 @@
 
     html {
       -webkit-tap-highlight-color: transparent;
-      overflow: visible;
+      min-height: 100%;
+      min-height: 100dvh;
+      /* Full-viewport wash so wide desktop (and any letterbox) is peach, not default white */
+      background: var(--bg);
     }
 
     body {
       margin: 0;
+      min-width: 100%;
       min-height: 100dvh;
       display: flex;
       align-items: center;
@@ -36,8 +40,6 @@
         max(0px, env(safe-area-inset-right, 0px))
         max(0px, env(safe-area-inset-bottom, 0px))
         max(0px, env(safe-area-inset-left, 0px));
-      overflow-x: visible;
-      overflow-y: visible;
     }
 
     .splash-mount {
@@ -62,7 +64,9 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: fill;
+      /* Preserve aspect; never non-uniformly stretch (e.g. if box aspect ever differs) */
+      object-fit: contain;
+      object-position: center;
       pointer-events: none;
       user-select: none;
       -webkit-user-drag: none;
@@ -116,8 +120,8 @@
     const splashArt = document.getElementById("splash-art");
     const SWIPE_MS = 620;
     const BITE_PLAY_MS = 1000;
-    /** Multiply fit-to-viewport scale by this (1.3 = 30% larger). */
-    const SPLASH_SCALE_BOOST = 1.3;
+    /** Multiply fit-to-viewport scale by this (1.1 = 10% larger). */
+    const SPLASH_SCALE_BOOST = 1.1;
     let isSwiping = false;
     let biteFlow = false;
 
