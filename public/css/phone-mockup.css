@@ -42,16 +42,16 @@ body:has(> .app-device) {
     padding: max(1rem, env(safe-area-inset-top, 0px)) max(1rem, env(safe-area-inset-right, 0px))
       max(1rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px));
     overflow: hidden;
-    /* Desk behind the “device” */
-    background: linear-gradient(165deg, #2e2e32 0%, #1a1a1e 50%, #141416 100%);
+    /* Same purple as app chrome (--purple-dark on most pages) */
+    background: var(--purple-dark, #831662);
   }
 
   .app-device {
-    /* Slightly smaller than 390×844 so the UI reads a bit more “inset” in the frame */
-    width: min(352px, 100% - 2rem);
-    height: min(762px, calc(100dvh - 2rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
+    /* iPhone 14/15 Pro–ish logical size */
+    width: min(390px, 100% - 2rem);
+    height: min(844px, calc(100dvh - 2rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
     min-height: 0;
-    border-radius: 40px;
+    border-radius: 44px;
     flex-shrink: 0;
     overflow: auto;
     overflow-x: hidden;
