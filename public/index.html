@@ -7,9 +7,9 @@
   <style>
     :root {
       --bg: #feb195;
-      /* Same Figma / prior splash artboard (type ~67px in this frame) */
-      --art-w: 706;
-      --art-h: 1115;
+      /* splash-hero.png intrinsic size (470×1024) */
+      --art-w: 470;
+      --art-h: 1024;
       --splash-scale: 1;
     }
 
@@ -105,9 +105,9 @@
       <img
         id="splash-art"
         class="splash-art"
-        src="assets/splash/iPhone-17-1.png"
-        width="706"
-        height="1115"
+        src="assets/splash/splash-hero.png"
+        width="470"
+        height="1024"
         alt=""
         decoding="async"
         fetchpriority="high"
@@ -128,8 +128,8 @@
     function setSplashScale() {
       const root = document.documentElement;
       const rs = getComputedStyle(root);
-      const w = parseFloat(rs.getPropertyValue("--art-w")) || 706;
-      const h = parseFloat(rs.getPropertyValue("--art-h")) || 1115;
+      const w = parseFloat(rs.getPropertyValue("--art-w")) || 470;
+      const h = parseFloat(rs.getPropertyValue("--art-h")) || 1024;
       const box = document.body.getBoundingClientRect();
       const availW = box.width;
       const availH = box.height;
