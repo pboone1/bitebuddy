@@ -4,16 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Bite Buddy Splash</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap"
-    rel="stylesheet"
-  />
   <style>
     :root {
       --bg: #feb195;
-      /* iPhone 17 - 1 artboard */
+      /* Same Figma / prior splash artboard (type ~67px in this frame) */
       --art-w: 706;
       --art-h: 1115;
       --splash-scale: 1;
@@ -61,145 +55,17 @@
       transform-origin: top left;
       cursor: pointer;
       will-change: transform;
-      overflow: visible;
+      overflow: hidden;
     }
 
-    .splash-layer,
-    .splash-title {
-      position: absolute;
-      margin: 0;
+    .splash-art {
       display: block;
-    }
-
-    .splash-layer {
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-    }
-
-    .splash-layer--hidden {
-      visibility: hidden;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
       pointer-events: none;
-    }
-
-    .splash-title {
-      left: 172px;
-      top: 225px;
-      width: 354px;
-      min-height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      font-family: "Madimi One", system-ui, sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 67px;
-      line-height: 1.05;
-      text-align: center;
-      color: #831662;
-      z-index: 20;
-      pointer-events: none;
-    }
-
-    /* z-order: back → front (Figma list order) */
-    .l-0686 {
-      z-index: 1;
-      left: 232px;
-      top: 680px;
-      width: 430px;
-      height: 323px;
-      background-image: url("assets/splash/IMG_0686.png");
-      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
-    }
-    .l-0675 {
-      z-index: 2;
-      left: 237px;
-      top: 353px;
-      width: 559px;
-      height: 419px;
-      background-image: url("assets/splash/IMG_0675.png");
-      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.12));
-    }
-    .l-0688 {
-      z-index: 3;
-      left: -147px;
-      top: 359px;
-      width: 491.51px;
-      height: 368.63px;
-      background-image: url("assets/splash/IMG_0688.png");
-      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
-      transform: rotate(-29.4deg);
-      transform-origin: center center;
-    }
-    .l-0682 {
-      z-index: 4;
-      left: 237px;
-      top: -45px;
-      width: 289px;
-      height: 217px;
-      background-image: url("assets/splash/IMG_0682.png");
-      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
-    }
-    .l-0679 {
-      z-index: 5;
-      left: 75px;
-      top: 717px;
-      width: 275px;
-      height: 207px;
-      background-image: url("assets/splash/IMG_0679.png");
-      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
-      transform: rotate(-97.24deg);
-      transform-origin: center center;
-    }
-    .l-0677 {
-      z-index: 6;
-      left: 147px;
-      top: 241px;
-      width: 433px;
-      height: 325px;
-      background-image: url("assets/splash/IMG_0677.png");
-      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
-    }
-    .l-0684 {
-      z-index: 7;
-      left: -119px;
-      top: 172px;
-      width: 418px;
-      height: 314px;
-      background-image: url("assets/splash/IMG_0684.png");
-      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
-      transform: rotate(-17.25deg);
-      transform-origin: center center;
-    }
-    .l-0673 {
-      z-index: 8;
-      left: 61px;
-      top: 12px;
-      width: 272px;
-      height: 204px;
-      background-image: url("assets/splash/IMG_0673.png");
-      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
-      transform: rotate(-9.63deg);
-      transform-origin: center center;
-    }
-    .l-0674 {
-      z-index: 9;
-      left: 363px;
-      top: 29px;
-      width: 334px;
-      height: 250px;
-      background-image: url("assets/splash/IMG_0674.png");
-      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
-    }
-    .l-0689 {
-      z-index: 0;
-      left: -1px;
-      top: 184px;
-      width: 433px;
-      height: 325px;
-      background-image: url("assets/splash/IMG_0689.png");
-      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     .splash-stage.is-swiping {
@@ -230,27 +96,24 @@
       id="splash"
       role="button"
       tabindex="0"
-      aria-labelledby="splash-title"
+      aria-label="Bite Buddy, open welcome page"
     >
-      <span class="splash-layer l-0686" aria-hidden="true"></span>
-      <span class="splash-layer l-0675" aria-hidden="true"></span>
-      <span class="splash-layer l-0688" aria-hidden="true"></span>
-      <span class="splash-layer l-0682" aria-hidden="true"></span>
-      <span class="splash-layer l-0679" aria-hidden="true"></span>
-      <span class="splash-layer l-0677" aria-hidden="true"></span>
-      <span class="splash-layer l-0684" aria-hidden="true"></span>
-      <span class="splash-layer l-0673" aria-hidden="true"></span>
-      <span class="splash-layer l-0674" aria-hidden="true"></span>
-      <h1 class="splash-title" id="splash-title">BITE BUDDY</h1>
-      <span
-        class="splash-layer l-0689 splash-layer--hidden"
-        aria-hidden="true"
-      ></span>
+      <img
+        id="splash-art"
+        class="splash-art"
+        src="assets/splash/iPhone-17-1.png"
+        width="706"
+        height="1115"
+        alt=""
+        decoding="async"
+        fetchpriority="high"
+      />
     </main>
   </div>
 
   <script>
     const splash = document.getElementById("splash");
+    const splashArt = document.getElementById("splash-art");
     const SWIPE_MS = 620;
     const BITE_PLAY_MS = 1000;
     let isSwiping = false;
@@ -276,6 +139,9 @@
 
     window.addEventListener("load", layoutSplash);
     window.addEventListener("resize", setSplashScale);
+    if (splashArt && !splashArt.complete) {
+      splashArt.addEventListener("load", setSplashScale, { once: true });
+    }
     if (document.readyState === "complete") layoutSplash();
     else setSplashScale();
 
